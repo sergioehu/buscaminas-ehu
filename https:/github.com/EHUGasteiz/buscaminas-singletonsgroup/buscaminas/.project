@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>documentacion/buscaminas.vpp</name>
+			<type>1</type>
+			<location>/home/mitch/Documents/VPProjects/buscaminas.vpp</location>
+		</link>
+	</linkedResources>
 </projectDescription>
