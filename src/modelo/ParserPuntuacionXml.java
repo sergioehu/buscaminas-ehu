@@ -42,7 +42,7 @@ public class ParserPuntuacionXml
         int newId;
         int longitudPuntuacion;
         
-        //Conseguir el último id de "puntuacion" para crear el nuevo id
+        //Conseguir el Ãºltimo id de "puntuacion" para crear el nuevo id
         try
         {
         	longitudPuntuacion= xmlDocument.getDocumentElement().getElementsByTagName("puntuacion").getLength()-1;
@@ -70,7 +70,7 @@ public class ParserPuntuacionXml
         Element valor = xmlDocument.createElement("valor");
         nombre.setTextContent(name);
         
-        //recoger el nuevoNombre de usuario y el valor de su puntuación
+        //recoger el nuevoNombre de usuario y el valor de su puntuaciÃ³n
         valor.setTextContent(puntuacionValor);
         puntuacion.appendChild(nombre);
         puntuacion.appendChild(valor);
@@ -106,7 +106,7 @@ public class ParserPuntuacionXml
 	            	puntuaciones.add(puntuacion);
 	            }
 	        }
-	        //Ordenar las puntuaciones por valor de puntuación
+	        //Ordenar las puntuaciones por valor de puntuaciÃ³n
 	        Collections.sort(puntuaciones, new Comparator<Puntuacion>() {
 	            public int compare(Puntuacion o1, Puntuacion o2) {
 	                return Integer.compare(o1.obtPuntuacion(), o2.obtPuntuacion());
@@ -136,7 +136,7 @@ public class ParserPuntuacionXml
         DocumentBuilder builder = null;
         try
         {
-            //Crear DocumentBuilder wcon configuración por Defecto
+            //Crear DocumentBuilder wcon configuraciÃ³n por Defecto
             builder = factory.newDocumentBuilder();
              
             //Parsear el contenido a un objeto Document

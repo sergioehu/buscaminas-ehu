@@ -82,7 +82,7 @@ public class Tablero extends JFrame {
 		contentPane.add(getPanelVisual(), gbc_panelVisual);
 	}
     
-	// Panel visual donde estará el la barra de menu y el juego
+	// Panel visual donde estarÃ¡ el la barra de menu y el juego
 	private JPanel getPanelVisual() {
 		if (panelVisual == null) {
 			panelVisual = new JPanel();
@@ -139,7 +139,7 @@ public class Tablero extends JFrame {
 		// emoticon_sonrisa(true);
 
 		medTablero = new MedidaTablero();
-		medTablero.elegirTamañoTablero();
+		medTablero.elegirTamanoTablero();
 		x = altoTablero;
 		y = anchoTablero;
 		// Crear Casillas
@@ -422,9 +422,9 @@ public class Tablero extends JFrame {
 			medida_12x25 = "12x25 (Nivel 3)";
 		}
 
-		private void elegirTamañoTablero() {
+		private void elegirTamanoTablero() {
 			Object[] opciones = { medida_7x10, medida_10x15, medida_12x25 };
-			Object selecionado = JOptionPane.showInputDialog(null, "Elige tamaño de tablero", "Tablero",
+			Object selecionado = JOptionPane.showInputDialog(null, "Elige tamano de tablero", "Tablero",
 					JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
 
 			anchoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[0]);
