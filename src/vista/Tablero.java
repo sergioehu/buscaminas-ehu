@@ -82,7 +82,7 @@ public class Tablero extends JFrame {
 		contentPane.add(getPanelVisual(), gbc_panelVisual);
 	}
     
-	// Panel visual donde estar√° el la barra de menu y el juego
+	// Panel visual donde estar· el la barra de menu y el juego
 	private JPanel getPanelVisual() {
 		if (panelVisual == null) {
 			panelVisual = new JPanel();
@@ -128,7 +128,7 @@ public class Tablero extends JFrame {
 	//Grabar puntuacion
     private void grabarPuntuacion(String nombre, int puntuacionValor ) {
     	gesPun = new GestorPuntuaciones();
-    	gesPun.a√±adirPuntuacionDeUsuarioEnXML(nombre,puntuacionValor);
+    	gesPun.anadirPuntuacionDeUsuarioEnXML(nombre,puntuacionValor);
     }
     
     //Mostrar el tablero
@@ -139,7 +139,7 @@ public class Tablero extends JFrame {
 		// emoticon_sonrisa(true);
 
 		medTablero = new MedidaTablero();
-		medTablero.elegirTama√±oTablero();
+		medTablero.elegirTamaÒoTablero();
 		x = altoTablero;
 		y = anchoTablero;
 		// Crear Casillas
@@ -422,9 +422,9 @@ public class Tablero extends JFrame {
 			medida_12x25 = "12x25 (Nivel 3)";
 		}
 
-		private void elegirTama√±oTablero() {
+		private void elegirTamaÒoTablero() {
 			Object[] opciones = { medida_7x10, medida_10x15, medida_12x25 };
-			Object selecionado = JOptionPane.showInputDialog(null, "Elige tama√±o de tablero", "Tablero",
+			Object selecionado = JOptionPane.showInputDialog(null, "Elige tamaÒo de tablero", "Tablero",
 					JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
 
 			anchoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[0]);

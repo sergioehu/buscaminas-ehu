@@ -12,7 +12,9 @@ import vista.Puntuacion;
  * Launch the application.
  */
 public class ProgramaPrincipal {
+	
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -22,6 +24,9 @@ public class ProgramaPrincipal {
 					e.printStackTrace();
 				}
 			}
+		
 		});
+	
 	}
+
 }

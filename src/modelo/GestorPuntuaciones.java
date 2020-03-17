@@ -23,10 +23,10 @@ public class GestorPuntuaciones {
     	
     }
 
-    public void añadirPuntuacionDeUsuarioEnXML(String nombre, int resultado ) {
+    public void anadirPuntuacionDeUsuarioEnXML(String nombre, int resultado ) {
          //TODO
     	ParserPuntuacionXml parserPuntuacionXml= new ParserPuntuacionXml();
-    	parserPuntuacionXml.añadirPuntuacion(nombre, String.valueOf(resultado));
+    	parserPuntuacionXml.anadirPuntuacion(nombre, String.valueOf(resultado));
     }
     
 }

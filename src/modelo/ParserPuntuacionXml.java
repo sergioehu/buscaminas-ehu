@@ -1,6 +1,6 @@
 package modelo;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileOutputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class ParserPuntuacionXml
 	{
 		
 	}
-    public void aÃ±adirPuntuacion(String name, String puntuacionValor )
+    public void anadirPuntuacion(String name, String puntuacionValor )
     {
         final String xmlFilePath = "puntuaciones.xml";
          
@@ -42,7 +42,7 @@ public class ParserPuntuacionXml
         int newId;
         int longitudPuntuacion;
         
-        //Conseguir el Ãºltimo id de "puntuacion" para crear el nuevo id
+        //Conseguir el último id de "puntuacion" para crear el nuevo id
         try
         {
         	longitudPuntuacion= xmlDocument.getDocumentElement().getElementsByTagName("puntuacion").getLength()-1;
@@ -70,7 +70,7 @@ public class ParserPuntuacionXml
         Element valor = xmlDocument.createElement("valor");
         nombre.setTextContent(name);
         
-        //recoger el nuevoNombre de usuario y el valor de su puntuaciÃ³n
+        //recoger el nuevoNombre de usuario y el valor de su puntuación
         valor.setTextContent(puntuacionValor);
         puntuacion.appendChild(nombre);
         puntuacion.appendChild(valor);
@@ -106,7 +106,7 @@ public class ParserPuntuacionXml
 	            	puntuaciones.add(puntuacion);
 	            }
 	        }
-	        //Ordenar las puntuaciones por valor de puntuaciÃ³n
+	        //Ordenar las puntuaciones por valor de puntuación
 	        Collections.sort(puntuaciones, new Comparator<Puntuacion>() {
 	            public int compare(Puntuacion o1, Puntuacion o2) {
 	                return Integer.compare(o1.obtPuntuacion(), o2.obtPuntuacion());
@@ -136,7 +136,7 @@ public class ParserPuntuacionXml
         DocumentBuilder builder = null;
         try
         {
-            //Crear DocumentBuilder wcon configuraciÃ³n por Defecto
+            //Crear DocumentBuilder wcon configuración por Defecto
             builder = factory.newDocumentBuilder();
              
             //Parsear el contenido a un objeto Document
