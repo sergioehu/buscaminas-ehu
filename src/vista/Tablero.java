@@ -30,7 +30,7 @@ public class Tablero extends JFrame {
 	public JPanel contentPane;
 	public JPanel panelVisual, rejilla;
 	private JMenuBar menuBarInicio;
-	private JMenuItem menuItemSalir, menuItemIniciar,menuItemPuntuaciones;
+	private JMenuItem menuItemSalir, menuItemIniciar,menuItemPuntuaciones,menuItemGuardarResultado;
 	private JMenu menuArchivo, menuAyuda;
 	private MedidaTablero medTablero;
 	private GestorPuntuaciones gesPun;
@@ -102,12 +102,15 @@ public class Tablero extends JFrame {
 			menuAyuda = new JMenu("Ayuda");
 			menuItemSalir = new JMenuItem("Salir");
 			menuItemIniciar = new JMenuItem("Iniciar...");
+			menuItemGuardarResultado = new JMenuItem("GuardarResultado");
 			menuItemPuntuaciones = new JMenuItem("Puntuaciones");
 			menuItemIniciar.addActionListener(e -> presentarTablero());
 			menuItemPuntuaciones.addActionListener(e -> mostrarPuntuaciones());
+			menuItemGuardarResultado.addActionListener(e -> grabarPuntuacion("Jon",300));
 			menuItemSalir.addActionListener(e -> this.dispose());
 			menuArchivo.add(menuItemIniciar);
 			menuArchivo.add(menuItemPuntuaciones);
+			menuArchivo.add(menuItemGuardarResultado);
 			menuArchivo.add(menuItemSalir);
 			menuBarInicio.add(menuArchivo);
 			menuBarInicio.add(menuAyuda);
@@ -119,7 +122,13 @@ public class Tablero extends JFrame {
 	//Mostrar puntuaciones
     private void mostrarPuntuaciones() {
     	gesPun = new GestorPuntuaciones();
-    	JOptionPane.showMessageDialog(panelVisual, gesPun.obtPuntuacionesEnTabla());
+    	JOptionPane.showMessageDialog(panelVisual, gesPun.obtPuntuacionesDesdeXMLEnTabla());
+    }
+    
+	//Grabar puntuacion
+    private void grabarPuntuacion(String nombre, int puntuacionValor ) {
+    	gesPun = new GestorPuntuaciones();
+    	gesPun.añadirPuntuacionDeUsuarioEnXML(nombre,puntuacionValor);
     }
     
     //Mostrar el tablero
