@@ -9,16 +9,12 @@ import javax.swing.JButton;
 
 public class Casilla extends JButton {
 
-    boolean esMina, visitado, bandera, detectado;
-    int minas_adyacentes;
-    int index;
-
-    void cambiarimagen(String ruta) {
-        ImageIcon icon1 = new ImageIcon(getClass().getResource(ruta));
-        Icon icono1 = new ImageIcon(icon1.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT));
-        setText(null);
-        setIcon(icono1);
-    }
+    public boolean esMina;
+	public boolean visitado;
+	public boolean bandera;
+	public boolean detectado;
+    public int minas_adyacentes;
+    public int index;
 
     public Casilla(int in) {
         esMina = false;
@@ -29,4 +25,12 @@ public class Casilla extends JButton {
         detectado = false;
         this.setPreferredSize(new Dimension(25, 25));
     }
+    
+    public void cambiarimagen(String ruta) {
+        ImageIcon icon1 = new ImageIcon(getClass().getResource(ruta));
+        Icon icono1 = new ImageIcon(icon1.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT));
+        setText(null);
+        setIcon(icono1);
+    }
+
 }

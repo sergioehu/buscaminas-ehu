@@ -2,16 +2,15 @@ package controlador;
 
 import java.awt.EventQueue;
 
-
+import modelo.Contador;
+import modelo.Puntuacion;
 import vista.Tablero;
 import vista.Casilla;
-import vista.Contador;
-import vista.Puntuacion;
 
 /**
  * Launch the application.
  */
-public class ProgramaPrincipal {
+public class ProgramaBuscaminas {
 	
 	public static void main(String[] args) {
 		

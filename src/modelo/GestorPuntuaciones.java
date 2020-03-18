@@ -6,7 +6,6 @@ import java.util.Comparator;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import vista.Puntuacion;
 
 public class GestorPuntuaciones {
 	private  ArrayList<Puntuacion> puntuaciones;

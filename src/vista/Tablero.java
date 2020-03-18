@@ -4,7 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Buscaminas;
+import modelo.Cronometro;
 import modelo.GestorPuntuaciones;
+import modelo.Puntuacion;
+
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -40,6 +45,7 @@ public class Tablero extends JFrame {
 	JLabel minas = new JLabel("10");
 	private String medida_7x10, medida_10x15, medida_12x25;
 	private int x, y, anchoTablero, altoTablero;
+	private Buscaminas logicaJuegoBuscaminas;
 	ArrayList<Integer> posicion_minas = new ArrayList<>();
 	Icon clicado;
 	boolean fin, gano;
@@ -55,7 +61,7 @@ public class Tablero extends JFrame {
 	 * Crear el Frame.
 	 */
 	public Tablero() {
-		initialize();
+		 initialize();
 	}
 
 	private void initialize() {
@@ -137,7 +143,7 @@ public class Tablero extends JFrame {
 		// emoticon.setSize(40, 40);
 		// emoticon.setLocation(180, 35);
 		// emoticon_sonrisa(true);
-
+		logicaJuegoBuscaminas= new Buscaminas();
 		medTablero = new MedidaTablero();
 		medTablero.elegirTamanoTablero();
 		x = altoTablero;
@@ -177,7 +183,7 @@ public class Tablero extends JFrame {
 								c[y2][y3].bandera = true;
 								minas.setText((Integer.parseInt(minas.getText()) - 1) + "");
 							}
-							if (gana()) {
+							if (logicaJuegoBuscaminas.gana(x,y,c,minas)) {
 								gano = true;
 								JOptionPane.showMessageDialog(null, "Victoria");
 							}
@@ -227,11 +233,11 @@ public class Tablero extends JFrame {
 							c[y2][y3].setContentAreaFilled(false);
 							emoticon_sonrisa(false);
 							cronometro.stop();
-							fin_juego();
+							logicaJuegoBuscaminas.fin_juego(x,y,c);
 						} else {
-							motor(y2, y3);
+							logicaJuegoBuscaminas.motor(y2, y3, x, y,c,n1,n2);
 							c[y2][y3].detectado = true;
-							if (gana()) {
+							if (logicaJuegoBuscaminas.gana(x,y,c,minas)) {
 								gano = true;
 								JOptionPane.showMessageDialog(null, "Victoria");
 							}
@@ -272,7 +278,16 @@ public class Tablero extends JFrame {
 			// tiempo.setLocation(310, 35);
 			// minas.setLocation(20, 35);
 		}
-		reiniciar();
+		
+		logicaJuegoBuscaminas.reiniciar(x,y,c,clicado);
+		emoticon_sonrisa(true);
+		//logicaJuegoBuscaminas.crearminas();
+		//logicaJuegoBuscaminas.gana();
+		//logicaJuegoBuscaminas.fin_juego();
+		//logicaJuegoBuscaminas.cambiar();
+		//logicaJuegoBuscaminas.motor();
+		
+		//reiniciar();
 		rejilla.setLayout(new GridLayout(x, y));
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
@@ -280,137 +295,6 @@ public class Tablero extends JFrame {
 			}
 		}
 
-	}
-	
-	//reiniciar partida
-    void reiniciar() {
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                c[i][j].setVisible(true);
-                c[i][j].setBorderPainted(true);
-                c[i][j].setContentAreaFilled(true);
-                c[i][j].esMina = false;
-                c[i][j].setIcon(clicado);
-                c[i][j].setEnabled(true);
-                c[i][j].visitado = false;
-                c[i][j].bandera = false;
-                c[i][j].detectado = false;
-            }
-        }
-        crearminas();
-        cronometro.stop();
-        emoticon_sonrisa(true);
-        tiempo.setText("0");
-        minas.setText("" + can_minas);
- 
-        fin = false;
-        gano = false;
-    }
-    
-    //colocar minas
-    void crearminas() {
-    	posicion_minas.clear();
-        int s;
-        for (int i = 0; i < can_minas; i++) {
-            s = (int) (Math.random() * (x * y));
-            if (posicion_minas.contains(s)) {
-                i--;
-            } else {
-            	posicion_minas.add(s);
-                c[s / x][s % y].esMina = true;
-            }
-        }
-    }
-
-    //Juego acaba ganando
-	boolean gana() {
-		if (!minas.getText().equals("0")) {
-			return false;
-		}
-		if (gano) {
-			return false;
-		}
-		for (int i = 0; i < x; i++) {
-			for (int q = 0; q < y; q++) {
-				if (c[i][q].detectado || !c[i][q].isVisible() || c[i][q].bandera) {
-					continue;
-				}
-				return false;
-			}
-		}
-		// if (act_sonido.isSelected()) {
-		// son.gana();
-		// }
-
-		// c.stop();
-		try {
-			// puntuacion.agregar(n, Integer.parseInt(tiempo.getText()));
-		} catch (Exception ex) {
-		}
-		return true;
-	}
-
-	//Juego acaba perdiendo
-	void fin_juego() {
-		for (int i = 0; i < x; i++) {
-			for (int j = 0; j < y; j++) {
-				if (c[i][j].detectado) {
-					continue;
-				}
-				if (c[i][j].esMina) {
-					if (c[i][j].bandera) {
-						c[i][j].cambiarimagen("/imagenes/mina_2.png");
-					} else {
-						c[i][j].cambiarimagen("/imagenes/mina123.png");
-					}
-					c[i][j].setBorderPainted(false);
-					c[i][j].setContentAreaFilled(false);
-					continue;
-				}
-				if (c[i][j].minas_adyacentes > 0) {
-					cambiar(i, j);
-					continue;
-				}
-				c[i][j].setVisible(false);
-				c[i][j].setEnabled(false);
-			}
-		}
-		if (!fin) {
-			// if (act_sonido.isSelected()) {
-			// son.pierde();
-			// }
-			fin = true;
-		}
-	}
-
-	//Cambiar imagen de la casilla
-	void cambiar(int q, int w) {
-		c[q][w].cambiarimagen("/imagenes/n_" + c[q][w].minas_adyacentes + ".png");
-		c[q][w].setBorderPainted(false);
-		c[q][w].setContentAreaFilled(false);
-		c[q][w].enable(false);
-		c[q][w].detectado = true;
-	}
-
-	//gestionar click del jugador en casiila
-	void motor(int fila, int columna) {
-		if (!(fila > -1 && fila < x && columna > -1 && columna < y) || c[fila][columna].visitado) {
-			return;
-		}
-		if (c[fila][columna].esMina) {
-			return;
-		}
-		if (c[fila][columna].minas_adyacentes > 0) {
-			cambiar(fila, columna);
-			return;
-		}
-
-		c[fila][columna].setVisible(false);
-		c[fila][columna].visitado = true;
-		c[fila][columna].detectado = true;
-		for (int i = 0; i < 8; i++) {
-			motor(fila + n1[i], columna + n2[i]);
-		}
 	}
 
 	//establecer medida tablero

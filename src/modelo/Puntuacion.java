@@ -1,4 +1,4 @@
-package vista;
+package modelo;
 public class Puntuacion {
         private String nombre;
         private int puntuacion;
