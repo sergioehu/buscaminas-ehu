@@ -15,7 +15,7 @@ public class Buscaminas {
 	boolean fin, gano;
 	
 	
-
+	//Constructor de la cLase
 	public Buscaminas() { 
 		
 	}
