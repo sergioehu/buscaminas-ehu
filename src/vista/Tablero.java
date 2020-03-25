@@ -95,13 +95,13 @@ public class Tablero extends JFrame {
 			panelVisual = new JPanel();
 			FlowLayout flowLayout = (FlowLayout) panelVisual.getLayout();
 			flowLayout.setAlignment(FlowLayout.LEFT);
-			panelVisual.add(getmenuBarInicio());
+			panelVisual.add(obtenerBarInico());
 		}
 		return panelVisual;
 	}
 	
 	//Iniciar la barra de menu
-	private JMenuBar getmenuBarInicio() {
+	private JMenuBar obtenerBarInico() {
 		if (menuBarInicio == null) {
 			menuBarInicio = new JMenuBar();
 			menuBarInicio.setSize(new Dimension(100, 200));

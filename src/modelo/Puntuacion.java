@@ -8,11 +8,11 @@ public class Puntuacion {
             this.puntuacion = score;
         }
 
-        public int obtPuntuacion() {
+        public int obtPuntuacion() { 
             return this.puntuacion;
         }
 
-        public String obtNombre() {
+        public String obtNombre() { 
             return this.nombre;
         }
     }
