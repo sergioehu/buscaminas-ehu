@@ -2,18 +2,25 @@ package modelo;
 
 public class Sesion {
 
-    public String nombreJugador;
-    public String medidaTablero;
-    public int puntuacion;
+    private String nombreJugador;
+    private String medidaTablero;
+    private static Sesion sesion;
+    private int puntuacion;
         
-    public Sesion(String nomJugador,String medTablero) {
+    private	Sesion(String nomJugador,String medTablero) {
     	nombreJugador = nomJugador;
     	medidaTablero = medTablero;
     }
-    public Sesion(String nomJugador,String medTablero, int puntos) {
-    	nombreJugador = nomJugador;
-    	medidaTablero = medTablero;
-    	puntuacion = puntos;
+    public static Sesion obtInstanciaSingleton(String nomJugador,String medTablero)
+    {
+    	if (sesion == null) {
+    		sesion = new Sesion (nomJugador,medTablero);
+    	}
+    	else
+    	{
+    		System.out.println("No se pudo crear el objeto "+ sesion + " porque ya existe un objeto de la clase sesion");
+    	}
+		return sesion;
     }
     
     public String obtenerNombre() {
