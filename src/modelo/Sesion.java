@@ -28,8 +28,8 @@ public class Sesion {
     	return medidaTablero;
     }
     
-    public int establecerPuntuacion(int puntos) {
-    	return puntuacion;
+    public void establecerPuntuacion(int puntos) {
+    	puntuacion=puntos;
     }
 
 }
