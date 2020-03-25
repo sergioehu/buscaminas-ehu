@@ -1,6 +1,6 @@
 package modelo;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -14,10 +14,9 @@ public class Buscaminas {
 	Cronometro cronometro;
 	boolean fin, gano;
 	
-
 	
-    //Iniciar partida
-	public Buscaminas() {
+	//Constructor de la cLase
+	public Buscaminas() { 
 		
 	}
 
@@ -43,6 +42,7 @@ public class Buscaminas {
         fin = false;
         gano = false;
     }
+    
     
     private void crearminas(int x, int y, Casilla[][] c) {
     	posicion_minas.clear();
