@@ -30,6 +30,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
+
 public class Tablero extends JFrame {
 
 	public JPanel contentPane;
@@ -253,7 +254,7 @@ public class Tablero extends JFrame {
 	}
     
 	//generar tablero
-	void generarTablero() {
+	void generarTablero() { 
 
 		rejilla = new JPanel();
 		if (x == 12) {

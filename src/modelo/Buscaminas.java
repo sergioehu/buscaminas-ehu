@@ -1,6 +1,6 @@
 package modelo;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -9,15 +9,14 @@ import vista.Casilla;
 
 public class Buscaminas {
 
-	ArrayList<Integer>  posicion_minas = new ArrayList<>();
+	ArrayList<Integer> posicion_minas = new ArrayList<>();
 	int can_minas=10;
 	Cronometro cronometro;
 	boolean fin, gano;
 	
-
 	
 
-	public Buscaminas() {
+	public Buscaminas() { 
 		
 	}
 
@@ -43,6 +42,7 @@ public class Buscaminas {
         fin = false;
         gano = false;
     }
+    
     
     private void crearminas(int x, int y, Casilla[][] c) {
     	posicion_minas.clear();
