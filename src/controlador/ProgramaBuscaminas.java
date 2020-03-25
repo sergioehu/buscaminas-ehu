@@ -8,7 +8,7 @@ import vista.Tablero;
 import vista.Casilla;
 
 /**
- * Launch the application.
+ * Incia la aplicacion.
  */
 public class ProgramaBuscaminas {
 	
