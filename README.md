@@ -4,13 +4,13 @@
 
 ***INSERT GRAPHIC HERE (include hyperlink in image)***
 
-# Repository Title Goes Here
+# Buscaminas-singletonsgroup
 
-> Subtitle or Short Description Goes Here
+> Creación de un Buscaminas en Java
 
-> ideally one sentence
+> Busca tus minas y ¡no las pises!
 
-> include terms/tags that can be searched
+> Buscaminas, Java
 
 **Badges will go here**
 
