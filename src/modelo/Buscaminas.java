@@ -16,7 +16,7 @@ public class Buscaminas {
 	
 
 	
-
+    //Iniciar partida
 	public Buscaminas() {
 		
 	}
