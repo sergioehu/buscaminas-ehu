@@ -33,7 +33,7 @@ public class ParserPuntuacionXml
     {
         final String xmlFilePath = "puntuaciones.xml";
          
-        //Use method to convert XML string content to XML Document object
+        // Usar este método para convertir contenido XML en string a un Objeto Document XML
         Document xmlDocument = convertXMLFileToXMLDocument( xmlFilePath );
         
         Element puntuacion = xmlDocument.createElement("puntuacion"); 
