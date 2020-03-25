@@ -1,6 +1,6 @@
 package vista;
 
-import javax.swing.JFrame;
+import javax.swing.JFrame; 
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
@@ -30,12 +30,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
+
 public class Tablero extends JFrame {
 
 	public JPanel contentPane;
 	public JPanel panelVisual, rejilla;
 	private JMenuBar menuBarInicio;
-	private JMenuItem menuItemSalir, menuItemIniciar, menuItemPuntuaciones, menuItemGuardarResultado;
+	private JMenuItem menuItemSalir, menuItemIniciar,menuItemPuntuaciones,menuItemGuardarResultado;
 	private JMenu menuArchivo, menuAyuda;
 	private MedidaTablero medTablero;
 	private GestorPuntuaciones gesPun;
@@ -55,13 +56,13 @@ public class Tablero extends JFrame {
 	int n2[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 	int n3[] = { 1, 0, -1, -1, 0, 0, 1, 1 };
 	int n4[] = { 0, 1, 0, 0, -1, -1, 0, 0 };
-	int can_minas = 10;
+	int can_minas=10;
 
 	/**
 	 * Crear el Frame.
 	 */
 	public Tablero() {
-		initialize();
+		 initialize();
 	}
 
 	private void initialize() {
@@ -70,8 +71,7 @@ public class Tablero extends JFrame {
 		setBounds(300, 100, 674, 507);
 		// Center the screen
 		Dimension dimemsion = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation(dimemsion.width / 2 - this.getSize().width / 2,
-				dimemsion.height / 2 - this.getSize().height / 2);
+		this.setLocation(dimemsion.width / 2 - this.getSize().width / 2,dimemsion.height / 2 - this.getSize().height / 2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -88,7 +88,7 @@ public class Tablero extends JFrame {
 		gbc_panelVisual.gridy = 1;
 		contentPane.add(getPanelVisual(), gbc_panelVisual);
 	}
-
+    
 	// Panel visual donde estará el la barra de menu y el juego
 	private JPanel getPanelVisual() {
 		if (panelVisual == null) {
@@ -99,8 +99,8 @@ public class Tablero extends JFrame {
 		}
 		return panelVisual;
 	}
-
-	// Iniciar la barra de menu
+	
+	//Iniciar la barra de menu
 	private JMenuBar getmenuBarInicio() {
 		if (menuBarInicio == null) {
 			menuBarInicio = new JMenuBar();
@@ -113,7 +113,7 @@ public class Tablero extends JFrame {
 			menuItemPuntuaciones = new JMenuItem("Puntuaciones");
 			menuItemIniciar.addActionListener(e -> presentarTablero());
 			menuItemPuntuaciones.addActionListener(e -> mostrarPuntuaciones());
-			menuItemGuardarResultado.addActionListener(e -> grabarPuntuacion("Jon", 300));
+			menuItemGuardarResultado.addActionListener(e -> grabarPuntuacion("Jon",300));
 			menuItemSalir.addActionListener(e -> this.dispose());
 			menuArchivo.add(menuItemIniciar);
 			menuArchivo.add(menuItemPuntuaciones);
@@ -125,26 +125,26 @@ public class Tablero extends JFrame {
 		}
 		return menuBarInicio;
 	}
-
-	// Mostrar puntuaciones
-	private void mostrarPuntuaciones() {
-		gesPun = new GestorPuntuaciones();
-		JOptionPane.showMessageDialog(panelVisual, gesPun.obtPuntuacionesDesdeXMLEnTabla());
-	}
-
-	// Grabar puntuacion
-	private void grabarPuntuacion(String nombre, int puntuacionValor) {
-		gesPun = new GestorPuntuaciones();
-		gesPun.anadirPuntuacionDeUsuarioEnXML(nombre, puntuacionValor);
-	}
-
-	// Mostrar el tablero
+	
+	//Mostrar puntuaciones
+    private void mostrarPuntuaciones() {
+    	gesPun = new GestorPuntuaciones();
+    	JOptionPane.showMessageDialog(panelVisual, gesPun.obtPuntuacionesDesdeXMLEnTabla());
+    }
+    
+	//Grabar puntuacion
+    private void grabarPuntuacion(String nombre, int puntuacionValor ) {
+    	gesPun = new GestorPuntuaciones();
+    	gesPun.anadirPuntuacionDeUsuarioEnXML(nombre,puntuacionValor);
+    }
+    
+    //Mostrar el tablero
 	private void presentarTablero() {
 
 		// emoticon.setSize(40, 40);
 		// emoticon.setLocation(180, 35);
 		// emoticon_sonrisa(true);
-		logicaJuegoBuscaminas = new Buscaminas();
+		logicaJuegoBuscaminas= new Buscaminas();
 		medTablero = new MedidaTablero();
 		medTablero.elegirTamanoTablero();
 		x = altoTablero;
@@ -153,10 +153,10 @@ public class Tablero extends JFrame {
 		c = new Casilla[x][y];
 		try {
 			ImageIcon icon1 = new ImageIcon(getClass().getResource(String.format("/imagenes/boton_clicado.png")));
-			Icon icono1 = new ImageIcon(
-					icon1.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT));
-			clicado = icon1;
-		} catch (Exception e) {
+	        Icon icono1 = new ImageIcon(icon1.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT));
+	        clicado= icon1;
+		}
+		catch(Exception e){
 			System.out.println(e);
 		}
 		for (int i = 0; i < x; i++) {
@@ -184,7 +184,7 @@ public class Tablero extends JFrame {
 								c[y2][y3].bandera = true;
 								minas.setText((Integer.parseInt(minas.getText()) - 1) + "");
 							}
-							if (logicaJuegoBuscaminas.gana(x, y, c, minas)) {
+							if (logicaJuegoBuscaminas.gana(x,y,c,minas)) {
 								gano = true;
 								JOptionPane.showMessageDialog(null, "Victoria");
 							}
@@ -234,11 +234,11 @@ public class Tablero extends JFrame {
 							c[y2][y3].setContentAreaFilled(false);
 							emoticon_sonrisa(false);
 							cronometro.stop();
-							logicaJuegoBuscaminas.fin_juego(x, y, c);
+							logicaJuegoBuscaminas.fin_juego(x,y,c);
 						} else {
-							logicaJuegoBuscaminas.motor(y2, y3, x, y, c, n1, n2);
+							logicaJuegoBuscaminas.motor(y2, y3, x, y,c,n1,n2);
 							c[y2][y3].detectado = true;
-							if (logicaJuegoBuscaminas.gana(x, y, c, minas)) {
+							if (logicaJuegoBuscaminas.gana(x,y,c,minas)) {
 								gano = true;
 								JOptionPane.showMessageDialog(null, "Victoria");
 							}
@@ -252,9 +252,9 @@ public class Tablero extends JFrame {
 		generarTablero();
 		panelVisual.add(rejilla, panelVisual);
 	}
-
-	// generar tablero
-	void generarTablero() {
+    
+	//generar tablero
+	void generarTablero() { 
 
 		rejilla = new JPanel();
 		if (x == 12) {
@@ -279,16 +279,16 @@ public class Tablero extends JFrame {
 			// tiempo.setLocation(310, 35);
 			// minas.setLocation(20, 35);
 		}
-
-		logicaJuegoBuscaminas.reiniciar(x, y, c, clicado);
+		
+		logicaJuegoBuscaminas.reiniciar(x,y,c,clicado);
 		emoticon_sonrisa(true);
-		// logicaJuegoBuscaminas.crearminas();
-		// logicaJuegoBuscaminas.gana();
-		// logicaJuegoBuscaminas.fin_juego();
-		// logicaJuegoBuscaminas.cambiar();
-		// logicaJuegoBuscaminas.motor();
-
-		// reiniciar();
+		//logicaJuegoBuscaminas.crearminas();
+		//logicaJuegoBuscaminas.gana();
+		//logicaJuegoBuscaminas.fin_juego();
+		//logicaJuegoBuscaminas.cambiar();
+		//logicaJuegoBuscaminas.motor();
+		
+		//reiniciar();
 		rejilla.setLayout(new GridLayout(x, y));
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
@@ -298,7 +298,7 @@ public class Tablero extends JFrame {
 
 	}
 
-	// establecer medida tablero
+	//establecer medida tablero
 	private class MedidaTablero {
 
 		private MedidaTablero() {
@@ -321,7 +321,7 @@ public class Tablero extends JFrame {
 		}
 	}
 
-	// mostrar emoticono smile
+    //mostrar emoticono smile	
 	void emoticon_sonrisa(boolean x) {
 		String pathSonrisaq;
 		if (x) {
@@ -330,13 +330,13 @@ public class Tablero extends JFrame {
 			pathSonrisaq = "/imagenes/cara_no.jpg";
 		}
 		try {
-			ImageIcon icon1 = new ImageIcon(getClass().getResource(pathSonrisaq));
-			Icon icono1 = new ImageIcon(
-					icon1.getImage().getScaledInstance(emoticon.getWidth(), emoticon.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon icon1 = new ImageIcon(getClass().getResource(pathSonrisaq));
+		Icon icono1 = new ImageIcon(icon1.getImage().getScaledInstance(emoticon.getWidth(), emoticon.getHeight(), Image.SCALE_DEFAULT));
 
-			emoticon.setText(null);
-			emoticon.setIcon(icono1);
-		} catch (Exception e) {
+		emoticon.setText(null);
+		emoticon.setIcon(icono1);
+		}catch( Exception e)
+		{
 			System.out.print(e);
 		}
 	}
