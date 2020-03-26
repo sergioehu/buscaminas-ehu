@@ -11,6 +11,7 @@ import modelo.Cronometro;
 import modelo.GestorPuntuaciones;
 import modelo.Puntuacion;
 import modelo.Sesion;
+import modelo.MedidasTablero;
 
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -39,7 +40,7 @@ public class Tablero extends JFrame {
 	private JMenuBar menuBarInicio;
 	private JMenuItem menuItemSalir, menuItemIniciar, menuItemPuntuaciones, menuItemGuardarResultado;
 	private JMenu menuArchivo, menuAyuda;
-	private MedidaTablero medTablero;
+	//private MedidaTablero medTablero;
 	private GestorPuntuaciones gesPun;
 	private Casilla[][] c;
 	JButton emoticon = new JButton();
@@ -147,8 +148,8 @@ public class Tablero extends JFrame {
 		// emoticon.setLocation(180, 35);
 		// emoticon_sonrisa(true);
 		logicaJuegoBuscaminas = new Buscaminas();
-		medTablero = new MedidaTablero();
-		medTablero.elegirTamanoTablero();
+		//medTablero = new MedidaTablero();
+		this.elegirTamanoTablero();
 		x = altoTablero;
 		y = anchoTablero;
 		// Crear Casillas
@@ -301,7 +302,7 @@ public class Tablero extends JFrame {
 	}
 
 	// establecer medida tablero
-	private class MedidaTablero {
+	/*private class MedidaTablero {
 
 		private MedidaTablero() {
 			medida_7x10 = "7x10 (Nivel 1)";
@@ -320,8 +321,32 @@ public class Tablero extends JFrame {
 			Sesion sesion = Sesion.obtInstanciaSingleton(nombreUsuario, selecionado.toString());
 
 		}
-	}
+	}*/
+	
+	
+	// establecer medida tablero utilizando el enum
+	private void elegirTamanoTablero() {
+		
+		MedidasTablero medida_1 = MedidasTablero.medida1;
+		MedidasTablero medida_2 = MedidasTablero.medida2;
+		MedidasTablero medida_3 = MedidasTablero.medida3;
+		
+		Object[] opciones = {medida_1.getMedidas() + medida_1.getNombre(), medida_2.getMedidas() + medida_2.getNombre(), medida_3.getMedidas() + medida_3.getNombre()};
+		
+		Object selecionado = JOptionPane.showInputDialog(null, "Elige tamano de tablero", "Tablero",
+				JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
 
+		anchoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[0]);
+		altoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[1]);
+		String nombreUsuario = JOptionPane.showInputDialog("Escribe tu nombre");
+		Sesion sesion = Sesion.getInstanciaSingleton(nombreUsuario, selecionado.toString());
+
+	}
+	
+	
+	
+	
+	
 	// mostrar emoticono smile
 	void emoticon_sonrisa(boolean x) {
 		String pathSonrisaq;

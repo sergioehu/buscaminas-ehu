@@ -11,7 +11,7 @@ public class Sesion {
     	nombreJugador = nomJugador;
     	medidaTablero = medTablero;
     }
-    public static Sesion obtInstanciaSingleton(String nomJugador,String medTablero)
+    public static Sesion getInstanciaSingleton(String nomJugador,String medTablero)
     {
     	if (sesion == null) {
     		sesion = new Sesion (nomJugador,medTablero);
