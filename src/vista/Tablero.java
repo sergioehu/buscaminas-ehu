@@ -40,7 +40,6 @@ public class Tablero extends JFrame {
 	private JMenuBar menuBarInicio;
 	private JMenuItem menuItemSalir, menuItemIniciar, menuItemPuntuaciones, menuItemGuardarResultado;
 	private JMenu menuArchivo, menuAyuda;
-	//private MedidaTablero medTablero;
 	private GestorPuntuaciones gesPun;
 	private Casilla[][] c;
 	JButton emoticon = new JButton();
@@ -301,28 +300,7 @@ public class Tablero extends JFrame {
 
 	}
 
-	// establecer medida tablero
-	/*private class MedidaTablero {
 
-		private MedidaTablero() {
-			medida_7x10 = "7x10 (Nivel 1)";
-			medida_10x15 = "10x15 (Nivel 2)";
-			medida_12x25 = "12x25 (Nivel 3)";
-		}
-
-		private void elegirTamanoTablero() {
-			Object[] opciones = { medida_7x10, medida_10x15, medida_12x25 };
-			Object selecionado = JOptionPane.showInputDialog(null, "Elige tamano de tablero", "Tablero",
-					JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
-
-			anchoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[0]);
-			altoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[1]);
-			String nombreUsuario = JOptionPane.showInputDialog("Escribe tu nombre");
-			Sesion sesion = Sesion.obtInstanciaSingleton(nombreUsuario, selecionado.toString());
-
-		}
-	}*/
-	
 	
 	// establecer medida tablero utilizando el enum
 	private void elegirTamanoTablero() {
