@@ -1,6 +1,7 @@
 package modelo;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -9,7 +10,7 @@ import vista.Casilla;
 
 public class Buscaminas {
 
-	ArrayList<Integer> posicion_minas = new ArrayList<>();
+	List<Integer> posicion_minas = new ArrayList<>();
 	int can_minas=10;
 	Cronometro cronometro;
 	boolean fin, gano;

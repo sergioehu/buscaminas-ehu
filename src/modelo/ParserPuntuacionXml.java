@@ -6,6 +6,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -81,7 +82,7 @@ public class ParserPuntuacionXml
     {
     	//lee archivo XML con lista de usuarios y puntuaciones y lo devuelve los datos encapsulados en un objeto JTable
     	final String xmlFilePath = "puntuaciones.xml";
-    	ArrayList<Puntuacion> puntuaciones = new ArrayList<>();
+    	List<Puntuacion> puntuaciones = new ArrayList<>();
     	JTable puntuacionTabla;
     	DefaultTableModel model=new DefaultTableModel();
         model.addColumn("Usuario");

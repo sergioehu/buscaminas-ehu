@@ -32,6 +32,7 @@ import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tablero extends JFrame {
 
@@ -49,7 +50,7 @@ public class Tablero extends JFrame {
 	private String medida_7x10, medida_10x15, medida_12x25;
 	private int x, y, anchoTablero, altoTablero;
 	private Buscaminas logicaJuegoBuscaminas;
-	ArrayList<Integer> posicion_minas = new ArrayList<>();
+	List<Integer> posicion_minas = new ArrayList<>();
 	Icon clicado;
 	boolean fin, gano;
 	Puntuacion puntuacion = null;
