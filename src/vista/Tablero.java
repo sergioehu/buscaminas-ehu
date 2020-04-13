@@ -43,7 +43,7 @@ public class Tablero extends JFrame {
 	private JMenu menuArchivo, menuAyuda;
 	//private MedidaTablero medTablero;
 	private GestorPuntuaciones gesPun;
-	private Casilla[][] c;
+	public Casilla[][] c;
 	JButton emoticon = new JButton();
 	JLabel tiempo = new JLabel();
 	JLabel minas = new JLabel("10");
@@ -89,7 +89,7 @@ public class Tablero extends JFrame {
 		gbc_panelVisual.insets = new Insets(0, 0, 5, 0);
 		gbc_panelVisual.fill = GridBagConstraints.BOTH;
 		gbc_panelVisual.gridx = 0;
-		gbc_panelVisual.gridy = 1;
+		gbc_panelVisual.gridy = 0;
 		contentPane.add(getPanelVisual(), gbc_panelVisual);
 	}
 
@@ -99,13 +99,14 @@ public class Tablero extends JFrame {
 			panelVisual = new JPanel();
 			FlowLayout flowLayout = (FlowLayout) panelVisual.getLayout();
 			flowLayout.setAlignment(FlowLayout.LEFT);
-			panelVisual.add(obtenerBarInico());
+			panelVisual.add(obtenerBarInicio());
 		}
 		return panelVisual;
 	}
+	
 
 	// Iniciar la barra de menu
-	private JMenuBar obtenerBarInico() {
+	private JMenuBar obtenerBarInicio() {
 		if (menuBarInicio == null) {
 			menuBarInicio = new JMenuBar();
 			menuBarInicio.setSize(new Dimension(100, 200));
@@ -145,11 +146,7 @@ public class Tablero extends JFrame {
 	// Mostrar el tablero
 	private void presentarTablero() {
 
-		// emoticon.setSize(40, 40);
-		// emoticon.setLocation(180, 35);
-		// emoticon_sonrisa(true);
 		logicaJuegoBuscaminas = new Buscaminas();
-		//medTablero = new MedidaTablero();
 		this.elegirTamanoTablero();
 		x = altoTablero;
 		y = anchoTablero;
@@ -254,51 +251,38 @@ public class Tablero extends JFrame {
 
 		}
 		generarTablero();
-		panelVisual.add(rejilla, panelVisual);
 	}
 
 	// generar tablero
 	void generarTablero() {
-
 		rejilla = new JPanel();
 		if (x == 12) {
 			setSize(555, 670);
 			rejilla.setSize(525, 525);
-			// barra.setBounds(0, 0, 555, 25);
-			// carita.setLocation(250, 35);
-			// tiempo.setLocation(440, 35);
-			// minas.setLocation(50, 35);
 		} else if (x == 10) {
 			setSize(505, 620);
 			rejilla.setSize(475, 475);
-			// barra.setBounds(0, 0, 505, 25);
-			// carita.setLocation(225, 35);
-			// tiempo.setLocation(400, 35);
-			// minas.setLocation(50, 35);
 		} else if (x == 7) {
 			setSize(405, 520);
 			rejilla.setSize(375, 375);
-			// barra.setBounds(0, 0, 405, 25);
-			// carita.setLocation(180, 35);
-			// tiempo.setLocation(310, 35);
-			// minas.setLocation(20, 35);
 		}
 
 		logicaJuegoBuscaminas.reiniciar(x, y, c, clicado);
-		emoticon_sonrisa(true);
-		// logicaJuegoBuscaminas.crearminas();
-		// logicaJuegoBuscaminas.gana();
-		// logicaJuegoBuscaminas.fin_juego();
-		// logicaJuegoBuscaminas.cambiar();
-		// logicaJuegoBuscaminas.motor();
 
-		// reiniciar();
 		rejilla.setLayout(new GridLayout(x, y));
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
 				rejilla.add(c[i][j]);
 			}
 		}
+		 
+		GridBagConstraints gbc_panelCasillas = new GridBagConstraints();
+		gbc_panelCasillas.insets = new Insets(0, 0, 5, 0);
+		gbc_panelCasillas.fill = GridBagConstraints.BOTH;
+		gbc_panelCasillas.gridx = 0;
+		gbc_panelCasillas.gridy = 1;
+		contentPane.add(rejilla, gbc_panelCasillas);
+
 
 	}
 
@@ -318,7 +302,6 @@ public class Tablero extends JFrame {
 		altoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[1]);
 		String nombreUsuario = JOptionPane.showInputDialog("Escribe tu nombre");
 		Sesion sesion = Sesion.getInstanciaSingleton(nombreUsuario, selecionado.toString());
-
 	}
 	
 	
