@@ -26,8 +26,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -41,7 +39,6 @@ public class Tablero extends JFrame {
 	private JMenuBar menuBarInicio;
 	private JMenuItem menuItemSalir, menuItemIniciar, menuItemPuntuaciones, menuItemGuardarResultado;
 	private JMenu menuArchivo, menuAyuda;
-	//private MedidaTablero medTablero;
 	private GestorPuntuaciones gesPun;
 	public Casilla[][] c;
 	JButton emoticon = new JButton();
@@ -54,9 +51,8 @@ public class Tablero extends JFrame {
 	Icon clicado;
 	boolean fin, gano;
 	Puntuacion puntuacion = null;
-	Cronometro cronometro = new Cronometro(tiempo);
-	int n1[] = { 1, 1, 0, -1, -1, -1, 0, 1 };
-	int n2[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+	public int n1[] = { 1, 1, 0, -1, -1, -1, 0, 1 };
+	public int n2[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 	int n3[] = { 1, 0, -1, -1, 0, 0, 1, 1 };
 	int n4[] = { 0, 1, 0, 0, -1, -1, 0, 0 };
 	int can_minas = 10;
@@ -146,12 +142,9 @@ public class Tablero extends JFrame {
 	// Mostrar el tablero
 	private void presentarTablero() {
 
-		logicaJuegoBuscaminas = new Buscaminas();
 		this.elegirTamanoTablero();
 		x = altoTablero;
 		y = anchoTablero;
-		// Crear Casillas
-		c = new Casilla[x][y];
 		try {
 			ImageIcon icon1 = new ImageIcon(getClass().getResource(String.format("/imagenes/boton_clicado.png")));
 			Icon icono1 = new ImageIcon(
@@ -159,101 +152,12 @@ public class Tablero extends JFrame {
 			clicado = icon1;
 		} catch (Exception e) {
 			System.out.println(e);
-		}
-		for (int i = 0; i < x; i++) {
-			for (int j = 0; j < y; j++) {
-				c[i][j] = new Casilla(i);
-				final int y2 = i;
-				final int y3 = j;
-
-				c[i][j].addMouseListener(new java.awt.event.MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						if (c[y2][y3].detectado || gano || fin) {
-							return;
-						}
-
-						if (e.getButton() == MouseEvent.BUTTON3) {
-							if (c[y2][y3].bandera) {
-								c[y2][y3].setIcon(clicado);
-								c[y2][y3].setEnabled(true);
-								c[y2][y3].bandera = false;
-								minas.setText((Integer.parseInt(minas.getText()) + 1) + "");
-							} else {
-								c[y2][y3].cambiarimagen("/imagenes/bandera.png");
-								c[y2][y3].setEnabled(false);
-								c[y2][y3].bandera = true;
-								minas.setText((Integer.parseInt(minas.getText()) - 1) + "");
-							}
-							if (logicaJuegoBuscaminas.gana(x, y, c, minas)) {
-								gano = true;
-								JOptionPane.showMessageDialog(null, "Victoria");
-							}
-						}
-					}
-
-					@Override
-					public void mousePressed(MouseEvent e) {
-						System.out.print(e.getButton());
-					}
-
-					@Override
-					public void mouseEntered(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void mouseExited(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void mouseReleased(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-
-					}
-
-				});
-
-				c[i][j].addActionListener(new java.awt.event.ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if (gano || fin) {
-							return;
-						}
-						if (!gano) {
-							if (!cronometro.isAlive()) {
-								cronometro = new Cronometro(tiempo);
-								cronometro.start();
-							}
-						}
-						if (c[y2][y3].esMina) {
-							c[y2][y3].cambiarimagen("/imagenes/mina123.png");
-							c[y2][y3].setBorderPainted(false);
-							c[y2][y3].setContentAreaFilled(false);
-							emoticon_sonrisa(false);
-							cronometro.stop();
-							logicaJuegoBuscaminas.fin_juego(x, y, c);
-						} else {
-							logicaJuegoBuscaminas.motor(y2, y3, x, y, c, n1, n2);
-							c[y2][y3].detectado = true;
-							if (logicaJuegoBuscaminas.gana(x, y, c, minas)) {
-								gano = true;
-								JOptionPane.showMessageDialog(null, "Victoria");
-							}
-						}
-
-					}
-				});
-			}
-
-		}
+		} 
+		logicaJuegoBuscaminas = new Buscaminas(x,y,clicado,minas,tiempo,n1,n2);
 		generarTablero();
 	}
 
-	// generar tablero
+	//Generar tablero
 	void generarTablero() {
 		rejilla = new JPanel();
 		if (x == 12) {
@@ -267,15 +171,16 @@ public class Tablero extends JFrame {
 			rejilla.setSize(375, 375);
 		}
 
-		logicaJuegoBuscaminas.reiniciar(x, y, c, clicado);
+		logicaJuegoBuscaminas.reiniciar(x, y, clicado);
 
 		rejilla.setLayout(new GridLayout(x, y));
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				rejilla.add(c[i][j]);
+				rejilla.add(logicaJuegoBuscaminas.obtCasilla(i, j));
 			}
 		}
-		 
+		
+		//Incluir la rejilla con las casillas en el contenedor JPanel 
 		GridBagConstraints gbc_panelCasillas = new GridBagConstraints();
 		gbc_panelCasillas.insets = new Insets(0, 0, 5, 0);
 		gbc_panelCasillas.fill = GridBagConstraints.BOTH;

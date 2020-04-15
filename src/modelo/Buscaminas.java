@@ -1,10 +1,13 @@
 package modelo;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import vista.Casilla;
 
@@ -12,17 +15,111 @@ public class Buscaminas {
 
 	List<Integer> posicion_minas = new ArrayList<>();
 	int can_minas=10;
-	Cronometro cronometro;
 	boolean fin, gano;
+	private Casilla[][] c;
+	Cronometro cronometro;
 	
-	
-	//Constructor de la cLase
-	public Buscaminas() { 
-		
+	//Constructor de la clase
+	public Buscaminas(int x, int y, Icon clicado, JLabel minas, JLabel tiempo, int[]n1, int[]n2) { 
+		cronometro = new Cronometro(tiempo);
+		c = new Casilla[x][y];		
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
+				c[i][j] = new Casilla(i);
+				final int y2 = i;
+				final int y3 = j;
+
+				c[i][j].addMouseListener(new java.awt.event.MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						if (c[y2][y3].detectado || gano || fin) {
+							return;
+						}
+
+						if (e.getButton() == MouseEvent.BUTTON3) {
+							if (c[y2][y3].bandera) {
+								c[y2][y3].setIcon(clicado);
+								c[y2][y3].setEnabled(true);
+								c[y2][y3].bandera = false;
+								minas.setText((Integer.parseInt(minas.getText()) + 1) + "");
+							} else {
+								c[y2][y3].cambiarimagen("/imagenes/bandera.png");
+								c[y2][y3].setEnabled(false);
+								c[y2][y3].bandera = true;
+								minas.setText((Integer.parseInt(minas.getText()) - 1) + "");
+							}
+							if (gana(x, y, c, minas)) {
+								gano = true;
+								JOptionPane.showMessageDialog(null, "Victoria");
+							}
+						}
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						System.out.print(e.getButton());
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void mouseExited(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+
+					}
+
+				});
+
+				c[i][j].addActionListener(new java.awt.event.ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (gano || fin) {
+							return;
+						}
+						if (!gano) {
+							if (!cronometro.isAlive()) {
+								cronometro = new Cronometro(tiempo);
+								cronometro.start();
+							}
+						}
+						if (c[y2][y3].esMina) {
+							c[y2][y3].cambiarimagen("/imagenes/mina123.png");
+							c[y2][y3].setBorderPainted(false);
+							c[y2][y3].setContentAreaFilled(false);
+							//emoticon_sonrisa(false);
+							cronometro.stop();
+							fin_juego(x, y, c);
+						} else {
+							motor(y2, y3, x, y, c, n1, n2);
+							c[y2][y3].detectado = true;
+							if (gana(x, y, c, minas)) {
+								gano = true;
+								JOptionPane.showMessageDialog(null, "Victoria");
+							}
+						}
+
+					}
+				});
+			}
+		}
 	}
 
+	public Casilla obtCasilla(int x,int y)
+	{
+		return c[x][y];
+	}
 	//reiniciar partida
-    public void reiniciar(int x, int y, Casilla[][] c, Icon clicado) {
+    public void reiniciar(int x, int y, Icon clicado) {
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 c[i][j].setVisible(true);
@@ -118,11 +215,6 @@ public class Buscaminas {
 				return false;
 			}
 		}
-		// if (act_sonido.isSelected()) {
-		// son.gana();
-		// }
-
-		// c.stop();
 		try {
 			// puntuacion.agregar(n, Integer.parseInt(tiempo.getText()));
 		} catch (Exception ex) {
