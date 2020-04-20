@@ -116,7 +116,7 @@ public class Tablero extends JFrame {
 			menuItemPuntuaciones = new JMenuItem("Puntuaciones");
 			menuItemIniciar.addActionListener(e -> presentarTablero());
 			menuItemPuntuaciones.addActionListener(e -> mostrarPuntuaciones());
-			menuItemGuardarResultado.addActionListener(e -> grabarPuntuacion(nombreUsuario, 300));
+			menuItemGuardarResultado.addActionListener(e -> grabarPuntuacion(nombreUsuario, 0));
 			menuItemSalir.addActionListener(e -> this.dispose());
 			menuArchivo.add(menuItemIniciar);
 			menuArchivo.add(menuItemPuntuaciones);
@@ -162,6 +162,11 @@ public class Tablero extends JFrame {
 
 	//Generar tablero
 	void generarTablero() {
+		if (rejilla!=null){
+			contentPane.remove(rejilla);
+			rejilla=null;
+			contentPane.updateUI();
+		}
 		rejilla = new JPanel();
 		if (x == 12) {
 			setSize(555, 670);
@@ -190,6 +195,7 @@ public class Tablero extends JFrame {
 		gbc_panelCasillas.gridx = 0;
 		gbc_panelCasillas.gridy = 1;
 		contentPane.add(rejilla, gbc_panelCasillas);
+
 
 
 	}

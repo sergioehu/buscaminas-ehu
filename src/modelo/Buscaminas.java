@@ -26,6 +26,7 @@ public class Buscaminas {
 	//Constructor de la clase
 	public Buscaminas(int x, int y, Icon clicado, JLabel minas, JLabel tiempo, int[]n1, int[]n2) { 
 		cronometro = new Cronometro(tiempo);
+		sesion=null; 
 		c = new Casilla[x][y];		
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
@@ -128,6 +129,7 @@ public class Buscaminas {
 	private void grabarPuntuacion() {
 		GestorPuntuaciones gesPun = new GestorPuntuaciones();
 		gesPun.anadirPuntuacionDeUsuarioEnXML(sesion.obtenerNombre(), sesion.obtenerPuntuacion());
+		sesion=null;
 	}
 	public Casilla obtCasilla(int x,int y)
 	{
