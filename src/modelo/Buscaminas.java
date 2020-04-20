@@ -21,6 +21,7 @@ public class Buscaminas {
 	boolean fin, gano;
 	private Casilla[][] c;
 	Cronometro cronometro;
+	Sesion sesion;
 	
 	//Constructor de la clase
 	public Buscaminas(int x, int y, Icon clicado, JLabel minas, JLabel tiempo, int[]n1, int[]n2) { 
@@ -53,6 +54,8 @@ public class Buscaminas {
 							}
 							if (gana(x, y, c, minas)) {
 								gano = true;
+								sesion.establecerPuntuacion(300);
+								grabarPuntuacion();
 								JOptionPane.showMessageDialog(null, "Victoria");
 							}
 						}
@@ -117,6 +120,15 @@ public class Buscaminas {
 		}
 	}
 
+	public void grabarNombreEnSesion(String nombreUsuario,String medTablero) {
+		sesion=null;
+		sesion = Sesion.getInstanciaSingleton(nombreUsuario, medTablero);
+	}
+	// Grabar puntuacion
+	private void grabarPuntuacion() {
+		GestorPuntuaciones gesPun = new GestorPuntuaciones();
+		gesPun.anadirPuntuacionDeUsuarioEnXML(sesion.obtenerNombre(), sesion.obtenerPuntuacion());
+	}
 	public Casilla obtCasilla(int x,int y)
 	{
 		return c[x][y];

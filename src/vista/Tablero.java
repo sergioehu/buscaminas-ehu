@@ -40,6 +40,8 @@ public class Tablero extends JFrame {
 	private JMenuItem menuItemSalir, menuItemIniciar, menuItemPuntuaciones, menuItemGuardarResultado;
 	private JMenu menuArchivo, menuAyuda;
 	private GestorPuntuaciones gesPun;
+	private String nombreUsuario;
+	private String medidaTableroNivelSeleccionado;
 	public Casilla[][] c;
 	JButton emoticon = new JButton();
 	JLabel tiempo = new JLabel();
@@ -114,7 +116,7 @@ public class Tablero extends JFrame {
 			menuItemPuntuaciones = new JMenuItem("Puntuaciones");
 			menuItemIniciar.addActionListener(e -> presentarTablero());
 			menuItemPuntuaciones.addActionListener(e -> mostrarPuntuaciones());
-			menuItemGuardarResultado.addActionListener(e -> grabarPuntuacion("Jon", 300));
+			menuItemGuardarResultado.addActionListener(e -> grabarPuntuacion(nombreUsuario, 300));
 			menuItemSalir.addActionListener(e -> this.dispose());
 			menuArchivo.add(menuItemIniciar);
 			menuArchivo.add(menuItemPuntuaciones);
@@ -154,6 +156,7 @@ public class Tablero extends JFrame {
 			System.out.println(e);
 		} 
 		logicaJuegoBuscaminas = new Buscaminas(x,y,clicado,minas,tiempo,n1,n2);
+		logicaJuegoBuscaminas.grabarNombreEnSesion(nombreUsuario,medidaTableroNivelSeleccionado);
 		generarTablero();
 	}
 
@@ -205,8 +208,10 @@ public class Tablero extends JFrame {
 
 		anchoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[0]);
 		altoTablero = Integer.parseInt(selecionado.toString().split(" ")[0].split("x")[1]);
-		String nombreUsuario = JOptionPane.showInputDialog("Escribe tu nombre");
-		Sesion sesion = Sesion.getInstanciaSingleton(nombreUsuario, selecionado.toString());
+		
+		//Almacenar en sesion nombre de usuario y nivel dedificultad elegido (medida tablero)
+		nombreUsuario = JOptionPane.showInputDialog("Escribe tu nombre");		
+		medidaTableroNivelSeleccionado=selecionado.toString();
 	}
 	
 	

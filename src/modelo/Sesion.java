@@ -31,8 +31,8 @@ public class Sesion {
     	return medidaTablero;
     }
     
-    public String obtenerPuntuacion() {
-    	return medidaTablero;
+    public int obtenerPuntuacion() {
+    	return puntuacion;
     }
     
     public void establecerPuntuacion(int puntos) {
