@@ -3,7 +3,10 @@ package modelo;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -120,19 +123,38 @@ public class Buscaminas {
 	}
 	//reiniciar partida
     public void reiniciar(int x, int y, Icon clicado) {
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                c[i][j].setVisible(true);
-                c[i][j].setBorderPainted(true);
-                c[i][j].setContentAreaFilled(true);
-                c[i][j].esMina=false;
-                c[i][j].setIcon(clicado);
-                c[i][j].setEnabled(true);
-                c[i][j].visitado = false;
-                c[i][j].bandera = false;
-                c[i][j].detectado = false;
-            }
-        }
+    	
+	    //Inicializar las casillas, bucles modernos Java 8 con stream
+		IntStream.range(0, x).forEach(posFila->{
+											IntStream.range(0, y).forEach(posColumna->{
+																					c[posFila][posColumna].setVisible(true);
+																					c[posFila][posColumna].setBorderPainted(true);
+																					c[posFila][posColumna].setContentAreaFilled(true);
+																					c[posFila][posColumna].esMina=false;
+																					c[posFila][posColumna].setIcon(clicado);
+																					c[posFila][posColumna].setEnabled(true);
+																					c[posFila][posColumna].visitado = false;
+																					c[posFila][posColumna].bandera = false;
+																					c[posFila][posColumna].detectado = false;
+																				     }); 
+												});
+	    /*	//Antigua forma de hacer bucles
+	        for (int i = 0; i < x; i++) {
+	            for (int j = 0; j < y; j++) {
+	                c[i][j].setVisible(true);
+	                c[i][j].setBorderPainted(true);
+	                c[i][j].setContentAreaFilled(true);
+	                c[i][j].esMina=false;
+	                c[i][j].setIcon(clicado);
+	                c[i][j].setEnabled(true);
+	                c[i][j].visitado = false;
+	                c[i][j].bandera = false;
+	                c[i][j].detectado = false;
+	            }
+	        }
+	        */
+    	
+    	
         crearminas(x,y,c);
         //cronometro.stop();
 
