@@ -7,10 +7,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import modelo.Buscaminas;
-import modelo.Cronometro;
 import modelo.GestorPuntuaciones;
 import modelo.Puntuacion;
-import modelo.Sesion;
 import modelo.MedidasTablero;
 
 import javax.swing.JLabel;
@@ -18,6 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,15 +26,18 @@ import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Tablero extends JFrame {
 
 	public JPanel contentPane;
-	public JPanel panelVisual, rejilla;
+	public JPanel panelVisual, rejilla, panelContadores, p1, p2, p3;
 	private JMenuBar menuBarInicio;
 	private JMenuItem menuItemSalir, menuItemIniciar, menuItemPuntuaciones, menuItemGuardarResultado;
 	private JMenu menuArchivo, menuAyuda;
@@ -44,8 +46,9 @@ public class Tablero extends JFrame {
 	private String medidaTableroNivelSeleccionado;
 	public Casilla[][] c;
 	JButton emoticon = new JButton();
-	JLabel tiempo = new JLabel();
-	JLabel minas = new JLabel("10");
+	public JLabel labelP1,labelP3;
+	TimerTask timer;
+	String tiempo = "";
 	private String medida_7x10, medida_10x15, medida_12x25;
 	private int x, y, anchoTablero, altoTablero;
 	private Buscaminas logicaJuegoBuscaminas;
@@ -70,6 +73,7 @@ public class Tablero extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(300, 100, 674, 507);
+		
 		// Center the screen
 		Dimension dimemsion = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dimemsion.width / 2 - this.getSize().width / 2,
@@ -88,16 +92,18 @@ public class Tablero extends JFrame {
 		gbc_panelVisual.fill = GridBagConstraints.BOTH;
 		gbc_panelVisual.gridx = 0;
 		gbc_panelVisual.gridy = 0;
-		contentPane.add(getPanelVisual(), gbc_panelVisual);
+		contentPane.add(obtPanelMenu(), gbc_panelVisual);
 	}
 
-	// Panel visual donde estará el la barra de menu y el juego
-	private JPanel getPanelVisual() {
+	// Panel visual donde estará  la barra de menu y el juego
+	private JPanel obtPanelMenu() {
 		if (panelVisual == null) {
 			panelVisual = new JPanel();
 			FlowLayout flowLayout = (FlowLayout) panelVisual.getLayout();
 			flowLayout.setAlignment(FlowLayout.LEFT);
+			panelVisual.setLayout(new GridLayout(2, 0));
 			panelVisual.add(obtenerBarInicio());
+			panelVisual.add(obtenerBarContadores());
 		}
 		return panelVisual;
 	}
@@ -107,7 +113,7 @@ public class Tablero extends JFrame {
 	private JMenuBar obtenerBarInicio() {
 		if (menuBarInicio == null) {
 			menuBarInicio = new JMenuBar();
-			menuBarInicio.setSize(new Dimension(100, 200));
+			menuBarInicio.setSize(new Dimension(100, 50));
 			menuArchivo = new JMenu("Archivo");
 			menuAyuda = new JMenu("Ayuda");
 			menuItemSalir = new JMenuItem("Salir");
@@ -127,6 +133,42 @@ public class Tablero extends JFrame {
 
 		}
 		return menuBarInicio;
+	}
+	private JPanel obtenerBarContadores() {
+		if (panelContadores == null) {
+			panelContadores = new JPanel();
+			panelContadores.setLayout(new GridLayout(1, 0));
+			panelContadores.setSize(new Dimension(100, 200));
+			
+			p1 = new JPanel();
+			p1.setBorder(BorderFactory.createLineBorder(Color.black));
+			labelP1 = new JLabel("0/0");
+			p1.add(labelP1);
+			p1.setName("contador");
+
+			p2 = new JPanel();
+			p2.setBorder(BorderFactory.createLineBorder(Color.black));
+			emoticon_sonrisa(true);
+			p2.setName("emoticon");
+			p2.add(emoticon);
+			
+			p3 = new JPanel();
+			p3.setBorder(BorderFactory.createLineBorder(Color.black));
+			labelP3 = new JLabel("cronometro");
+			p3.setName("cronometro");
+			p3.add(labelP3);
+
+
+			
+			
+			panelContadores.add(p1);
+			panelContadores.add(p2);
+			panelContadores.add(p3);
+			
+
+
+		}
+		return panelContadores;
 	}
 
 	// Mostrar puntuaciones
@@ -155,7 +197,7 @@ public class Tablero extends JFrame {
 		} catch (Exception e) {
 			System.out.println(e);
 		} 
-		logicaJuegoBuscaminas = new Buscaminas(x,y,clicado,minas,tiempo,n1,n2);
+		logicaJuegoBuscaminas = new Buscaminas(x,y,clicado,tiempo,n1,n2);
 		logicaJuegoBuscaminas.grabarNombreEnSesion(nombreUsuario,medidaTableroNivelSeleccionado);
 		generarTablero();
 	}
@@ -180,6 +222,13 @@ public class Tablero extends JFrame {
 		}
 
 		logicaJuegoBuscaminas.reiniciar(x, y, clicado);
+		labelP1.setText(logicaJuegoBuscaminas.contador.actualizarContador(0));
+		emoticon_sonrisa(true);
+
+		try {
+		actualizarContadorMinas();
+		actualizarCronometro();
+		}catch(Exception e) {}
 
 		rejilla.setLayout(new GridLayout(x, y));
 		for (int i = 0; i < x; i++) {
@@ -187,12 +236,12 @@ public class Tablero extends JFrame {
 				rejilla.add(logicaJuegoBuscaminas.obtCasilla(i, j));
 			}
 		}
-		
+
 		//Incluir la rejilla con las casillas en el contenedor JPanel 
 		GridBagConstraints gbc_panelCasillas = new GridBagConstraints();
 		gbc_panelCasillas.insets = new Insets(0, 0, 5, 0);
 		gbc_panelCasillas.fill = GridBagConstraints.BOTH;
-		gbc_panelCasillas.gridx = 0;
+		gbc_panelCasillas.gridx = 0	;
 		gbc_panelCasillas.gridy = 1;
 		contentPane.add(rejilla, gbc_panelCasillas);
 
@@ -222,7 +271,26 @@ public class Tablero extends JFrame {
 	
 	
 	
-	
+	public void actualizarContadorMinas() throws InterruptedException {
+		
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+	    		labelP1.setText(logicaJuegoBuscaminas.contador.actualizarContador(0));
+			}
+		}, 0, 1000);
+	}
+	public void actualizarCronometro() throws InterruptedException {
+		
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+	    		labelP3.setText(logicaJuegoBuscaminas.cronometro.cron.toString());
+			}
+		}, 0, 1000);
+	}
 	
 	// mostrar emoticono smile
 	void emoticon_sonrisa(boolean x) {
@@ -235,7 +303,7 @@ public class Tablero extends JFrame {
 		try {
 			ImageIcon icon1 = new ImageIcon(getClass().getResource(pathSonrisaq));
 			Icon icono1 = new ImageIcon(
-					icon1.getImage().getScaledInstance(emoticon.getWidth(), emoticon.getHeight(), Image.SCALE_DEFAULT));
+					icon1.getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
 
 			emoticon.setText(null);
 			emoticon.setIcon(icono1);

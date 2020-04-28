@@ -17,15 +17,18 @@ import vista.Casilla;
 public class Buscaminas {
 
 	List<Integer> posicion_minas = new ArrayList<>();
-	int can_minas=10;
+	int can_minas=9;
 	boolean fin, gano;
 	private Casilla[][] c;
-	Cronometro cronometro;
+	public Cronometro cronometro;
+	public Contador contador;
 	Sesion sesion;
+	int minas=0;
 	
 	//Constructor de la clase
-	public Buscaminas(int x, int y, Icon clicado, JLabel minas, JLabel tiempo, int[]n1, int[]n2) { 
+	public Buscaminas(int x, int y, Icon clicado,String tiempo, int[]n1, int[]n2) { 
 		cronometro = new Cronometro(tiempo);
+		contador = new Contador(can_minas);
 		sesion=null; 
 		c = new Casilla[x][y];		
 		for (int i = 0; i < x; i++) {
@@ -46,16 +49,17 @@ public class Buscaminas {
 								c[y2][y3].setIcon(clicado);
 								c[y2][y3].setEnabled(true);
 								c[y2][y3].bandera = false;
-								minas.setText((Integer.parseInt(minas.getText()) + 1) + "");
+								contador.actualizarContador(minas-1);
 							} else {
 								c[y2][y3].cambiarimagen("/imagenes/bandera.png");
 								c[y2][y3].setEnabled(false);
 								c[y2][y3].bandera = true;
-								minas.setText((Integer.parseInt(minas.getText()) - 1) + "");
+								contador.actualizarContador(minas+1);
+								
 							}
-							if (gana(x, y, c, minas)) {
+							if (gana(x, y, c, contador.obtConteo())) {
 								gano = true;
-								sesion.establecerPuntuacion(300);
+								sesion.establecerPuntuacion(1000-cronometro.obtTiempo());
 								grabarPuntuacion();
 								JOptionPane.showMessageDialog(null, "Victoria");
 							}
@@ -109,7 +113,7 @@ public class Buscaminas {
 						} else {
 							motor(y2, y3, x, y, c, n1, n2);
 							c[y2][y3].detectado = true;
-							if (gana(x, y, c, minas)) {
+							if (gana(x, y, c, contador.obtConteo())) {
 								gano = true;
 								JOptionPane.showMessageDialog(null, "Victoria");
 							}
@@ -236,8 +240,8 @@ public class Buscaminas {
 	}
 	
     //Juego acaba ganando
-	public boolean gana(int x, int y, Casilla[][] c,JLabel minas) {
-		if (!minas.getText().equals("0")) {
+	public boolean gana(int x, int y, Casilla[][] c,int minas) {
+		if (minas==0) {
 			return false;
 		}
 		if (gano) {

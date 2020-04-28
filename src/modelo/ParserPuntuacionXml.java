@@ -45,7 +45,6 @@ public class ParserPuntuacionXml
         try
         {
         	longitudPuntuacion= xmlDocument.getDocumentElement().getElementsByTagName("puntuacion").getLength()-1;
-        	System.out.println(longitudPuntuacion);
         	if (longitudPuntuacion>0)
         	{   
         		newId=Integer.parseInt(xmlDocument.getDocumentElement().
@@ -168,7 +167,6 @@ public class ParserPuntuacionXml
             
             transformer.transform(new DOMSource(xmlDocument), new StreamResult(writer));
             String xmlString = writer.getBuffer().toString();   
-            System.out.println(xmlString);          
              
             //Escribir XML a un archivo
             FileOutputStream outStream = new FileOutputStream(new File(fileName)); 
