@@ -1,5 +1,9 @@
 <puntuaciones>
-                                                                                            
+                                                                                                            
+    
+    
+    
+    
     
     
     
@@ -22,7 +26,11 @@
     
     
     <puntuacion id="101">
-                                                                                                                                                                                        
+                                                                                                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -45,7 +53,11 @@
         
         
         <nombre>User 0</nombre>
-                                                                                                                                                                                        
+                                                                                                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -68,7 +80,11 @@
         
         
         <valor>27</valor>
-                                                                                                                                                                                    
+                                                                                                                                                                                                                    
+    
+    
+    
+    
     
     
     
@@ -91,7 +107,11 @@
     
     
     </puntuacion>
-                                                                                            
+                                                                                                            
+    
+    
+    
+    
     
     
     
@@ -114,7 +134,11 @@
     
     
     <puntuacion id="102">
-                                                                                                                                                                                        
+                                                                                                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -137,7 +161,11 @@
         
         
         <nombre>Brian Lara</nombre>
-                                                                                                                                                                                        
+                                                                                                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -160,7 +188,11 @@
         
         
         <valor>23</valor>
-                                                                                                                                                                                    
+                                                                                                                                                                                                                    
+    
+    
+    
+    
     
     
     
@@ -183,7 +215,11 @@
     
     
     </puntuacion>
-                                                                                            
+                                                                                                            
+    
+    
+    
+    
     
     
     
@@ -206,7 +242,11 @@
     
     
     <puntuacion id="103">
-                                                                                                                                                                                        
+                                                                                                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -229,7 +269,11 @@
         
         
         <nombre>aaaa</nombre>
-                                                                                                                                                                                        
+                                                                                                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -252,7 +296,11 @@
         
         
         <valor>24</valor>
-                                                                                                                                                                                    
+                                                                                                                                                                                                                    
+    
+    
+    
+    
     
     
     
@@ -275,7 +323,7 @@
     
     
     </puntuacion>
-                                                                                            
+                                                                                                            
     
     
     
@@ -304,8 +352,68 @@
     
  
 
+    
+    
+    
+    
     <puntuacion id="104">
+                                        
+        
+        
+        
         <nombre>Atlántida</nombre>
+                                        
+        
+        
+        
         <valor>993</valor>
+                                    
+    
+    
+    
+    </puntuacion>
+                
+    
+    
+    
+    <puntuacion id="105">
+                                
+        
+        
+        <nombre>DrunvaloMelchizedek</nombre>
+                                
+        
+        
+        <valor>991</valor>
+                            
+    
+    
+    </puntuacion>
+            
+    
+    
+    <puntuacion id="106">
+                        
+        
+        <nombre>DrunvaloMelchizedek</nombre>
+                        
+        
+        <valor>989</valor>
+                    
+    
+    </puntuacion>
+        
+    
+    <puntuacion id="107">
+                
+        <nombre>DrunvaloMelchizedek</nombre>
+                
+        <valor>990</valor>
+            
+    </puntuacion>
+    
+    <puntuacion id="108">
+        <nombre>Melchizedek</nombre>
+        <valor>990</valor>
     </puntuacion>
 </puntuaciones>

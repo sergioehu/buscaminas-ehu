@@ -37,19 +37,18 @@ import java.util.TimerTask;
 public class Tablero extends JFrame {
 
 	public JPanel contentPane;
-	public JPanel panelVisual, rejilla, panelContadores, p1, p2, p3;
+	public JPanel panelVisual, rejilla, panelContadores, panelContador, panelEmoticon, panelCronometro;
 	private JMenuBar menuBarInicio;
 	private JMenuItem menuItemSalir, menuItemIniciar, menuItemPuntuaciones, menuItemGuardarResultado;
 	private JMenu menuArchivo, menuAyuda;
+	private Emoticono emoticon;
 	private GestorPuntuaciones gesPun;
 	private String nombreUsuario;
 	private String medidaTableroNivelSeleccionado;
 	public Casilla[][] c;
-	JButton emoticon = new JButton();
-	public JLabel labelP1,labelP3;
+	public JLabel contadorLabel,cronometroLabel;
 	TimerTask timer;
 	String tiempo = "";
-	private String medida_7x10, medida_10x15, medida_12x25;
 	private int x, y, anchoTablero, altoTablero;
 	private Buscaminas logicaJuegoBuscaminas;
 	List<Integer> posicion_minas = new ArrayList<>();
@@ -74,7 +73,7 @@ public class Tablero extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(300, 100, 674, 507);
 		
-		// Center the screen
+		// Centrado en la pantalla
 		Dimension dimemsion = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dimemsion.width / 2 - this.getSize().width / 2,
 				dimemsion.height / 2 - this.getSize().height / 2);
@@ -94,6 +93,7 @@ public class Tablero extends JFrame {
 		gbc_panelVisual.gridy = 0;
 		contentPane.add(obtPanelMenu(), gbc_panelVisual);
 	}
+	
 
 	// Panel visual donde estará  la barra de menu y el juego
 	private JPanel obtPanelMenu() {
@@ -107,7 +107,6 @@ public class Tablero extends JFrame {
 		}
 		return panelVisual;
 	}
-	
 
 	// Iniciar la barra de menu
 	private JMenuBar obtenerBarInicio() {
@@ -130,40 +129,41 @@ public class Tablero extends JFrame {
 			menuArchivo.add(menuItemSalir);
 			menuBarInicio.add(menuArchivo);
 			menuBarInicio.add(menuAyuda);
-
 		}
 		return menuBarInicio;
 	}
+	
+	//Panel de paneles: Contador, Emoticon, Cronometro
 	private JPanel obtenerBarContadores() {
 		if (panelContadores == null) {
 			panelContadores = new JPanel();
 			panelContadores.setLayout(new GridLayout(1, 0));
 			panelContadores.setSize(new Dimension(100, 200));
 			
-			p1 = new JPanel();
-			p1.setBorder(BorderFactory.createLineBorder(Color.black));
-			labelP1 = new JLabel("0/0");
-			p1.add(labelP1);
-			p1.setName("contador");
-
-			p2 = new JPanel();
-			p2.setBorder(BorderFactory.createLineBorder(Color.black));
-			emoticon_sonrisa(true);
-			p2.setName("emoticon");
-			p2.add(emoticon);
+			//Panel del Contador
+			panelContador = new JPanel();
+			panelContador.setBorder(BorderFactory.createLineBorder(Color.black));
+			contadorLabel = new JLabel("0/0");
+			panelContador.add(contadorLabel);
+			panelContador.setName("contador");
 			
-			p3 = new JPanel();
-			p3.setBorder(BorderFactory.createLineBorder(Color.black));
-			labelP3 = new JLabel("cronometro");
-			p3.setName("cronometro");
-			p3.add(labelP3);
-
-
+			//Panel del Emoticon
+			panelEmoticon = new JPanel();
+			panelEmoticon.setBorder(BorderFactory.createLineBorder(Color.black));
+			panelEmoticon.setName("emoticon");
+			emoticon = new Emoticono(); 
+			panelEmoticon.add(emoticon.emoticon_sonrisa(true));
 			
+			//Panel del Cronometro
+			panelCronometro = new JPanel();
+			panelCronometro.setBorder(BorderFactory.createLineBorder(Color.black));
+			cronometroLabel = new JLabel("cronometro");
+			panelCronometro.setName("cronometro");
+			panelCronometro.add(cronometroLabel);
 			
-			panelContadores.add(p1);
-			panelContadores.add(p2);
-			panelContadores.add(p3);
+			panelContadores.add(panelContador);
+			panelContadores.add(panelEmoticon);
+			panelContadores.add(panelCronometro);
 			
 
 
@@ -172,10 +172,12 @@ public class Tablero extends JFrame {
 	}
 
 	// Mostrar puntuaciones
+	
 	private void mostrarPuntuaciones() {
 		gesPun = new GestorPuntuaciones();
 		JOptionPane.showMessageDialog(panelVisual, gesPun.obtPuntuacionesDesdeXMLEnTabla());
 	}
+	
 
 	// Grabar puntuacion
 	private void grabarPuntuacion(String nombre, int puntuacionValor) {
@@ -222,12 +224,14 @@ public class Tablero extends JFrame {
 		}
 
 		logicaJuegoBuscaminas.reiniciar(x, y, clicado);
-		labelP1.setText(logicaJuegoBuscaminas.contador.actualizarContador(0));
-		emoticon_sonrisa(true);
+		contadorLabel.setText(logicaJuegoBuscaminas.contador.actualizarContador(0));
+		panelEmoticon.removeAll();
+		panelEmoticon.add(logicaJuegoBuscaminas.emoticono.emoticon_sonrisa(true));
 
 		try {
-		actualizarContadorMinas();
-		actualizarCronometro();
+			actualizarContadorMinas();
+			actualizarCronometro();
+			actualizarEmoticon();
 		}catch(Exception e) {}
 
 		rejilla.setLayout(new GridLayout(x, y));
@@ -244,10 +248,8 @@ public class Tablero extends JFrame {
 		gbc_panelCasillas.gridx = 0	;
 		gbc_panelCasillas.gridy = 1;
 		contentPane.add(rejilla, gbc_panelCasillas);
-
-
-
 	}
+	
 
 	// establecer medida tablero utilizando el enum
 	private void elegirTamanoTablero() {
@@ -269,47 +271,44 @@ public class Tablero extends JFrame {
 		medidaTableroNivelSeleccionado=selecionado.toString();
 	}
 	
-	
-	
+	//Actualizar el contador de minas en el Panel 
 	public void actualizarContadorMinas() throws InterruptedException {
-		
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-	    		labelP1.setText(logicaJuegoBuscaminas.contador.actualizarContador(0));
+	    		contadorLabel.setText(logicaJuegoBuscaminas.contador.actualizarContador(0));
 			}
 		}, 0, 1000);
 	}
+
+	//Actualizar el cronómetro en el Panel 
 	public void actualizarCronometro() throws InterruptedException {
 		
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-	    		labelP3.setText(logicaJuegoBuscaminas.cronometro.cron.toString());
+	    		cronometroLabel.setText(logicaJuegoBuscaminas.cronometro.cron.toString());
 			}
 		}, 0, 1000);
 	}
 	
-	// mostrar emoticono smile
-	void emoticon_sonrisa(boolean x) {
-		String pathSonrisaq;
-		if (x) {
-			pathSonrisaq = "/imagenes/cara_si.jpg";
-		} else {
-			pathSonrisaq = "/imagenes/cara_no.jpg";
+	//Actualizar el emoticon en el Panel 
+		public void actualizarEmoticon() throws InterruptedException {
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+		    		if (logicaJuegoBuscaminas.fin) {
+		    			panelEmoticon.removeAll();
+		    			panelEmoticon.add(logicaJuegoBuscaminas.emoticono.emoticon_sonrisa(false));
+		    			contentPane.updateUI();
+		    			
+		    		}
+		    		
+				}
+			}, 0, 1000);
 		}
-		try {
-			ImageIcon icon1 = new ImageIcon(getClass().getResource(pathSonrisaq));
-			Icon icono1 = new ImageIcon(
-					icon1.getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
-
-			emoticon.setText(null);
-			emoticon.setIcon(icono1);
-		} catch (Exception e) {
-			System.out.print(e);
-		}
-	}
 
 }

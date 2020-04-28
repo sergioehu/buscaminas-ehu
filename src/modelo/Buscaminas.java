@@ -13,13 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import vista.Casilla;
+import vista.Emoticono;
 
 public class Buscaminas {
 
 	List<Integer> posicion_minas = new ArrayList<>();
 	int can_minas=9;
-	boolean fin, gano;
+	public boolean fin, gano;
 	private Casilla[][] c;
+	public Emoticono emoticono;
 	public Cronometro cronometro;
 	public Contador contador;
 	Sesion sesion;
@@ -27,6 +29,7 @@ public class Buscaminas {
 	
 	//Constructor de la clase
 	public Buscaminas(int x, int y, Icon clicado,String tiempo, int[]n1, int[]n2) { 
+		emoticono=new Emoticono();
 		cronometro = new Cronometro(tiempo);
 		contador = new Contador(can_minas);
 		sesion=null; 
@@ -171,12 +174,7 @@ public class Buscaminas {
 	            }
 	        }
 	        */
-    	
-    	
         crearminas(x,y,c);
-        //cronometro.stop();
-
-        //minas.setText("" + can_minas);
         fin = false;
         gano = false;
     }
@@ -199,11 +197,15 @@ public class Buscaminas {
 
 	//Cambiar imagen de la casilla
 	public void cambiar(int q, int w, Casilla[][] c) {
+
 		c[q][w].cambiarimagen("/imagenes/n_" + c[q][w].minas_adyacentes + ".png");
 		c[q][w].setBorderPainted(false);
 		c[q][w].setContentAreaFilled(false);
 		c[q][w].enable(false);
 		c[q][w].detectado = true;
+	}
+	public Emoticono obtEmoticono() {
+		return emoticono;
 	}
 	
 	//Juego acaba perdiendo
@@ -232,10 +234,8 @@ public class Buscaminas {
 			}
 		}
 		if (!fin) {
-			// if (act_sonido.isSelected()) {
-			// son.pierde();
-			// }
 			fin = true;
+			sesion=null;
 		}
 	}
 	
