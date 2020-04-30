@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import modelo.Buscaminas;
@@ -17,6 +18,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -139,13 +142,19 @@ public class Tablero extends JFrame {
 			panelContadores = new JPanel();
 			panelContadores.setLayout(new GridLayout(1, 0));
 			panelContadores.setSize(new Dimension(100, 200));
+			String title = "Buscaminas-singletonsgroup";
+			Border border = BorderFactory.createTitledBorder(title);
+			panelContadores.setBorder(border);
 			
 			//Panel del Contador
 			panelContador = new JPanel();
+			panelContador.setLayout(new BoxLayout(panelContador, BoxLayout.X_AXIS ));
 			panelContador.setBorder(BorderFactory.createLineBorder(Color.black));
 			contadorLabel = new JLabel("0/0");
-			panelContador.add(contadorLabel);
 			panelContador.setName("contador");
+			panelContador.add(Box.createHorizontalGlue());
+			panelContador.add(contadorLabel);
+			panelContador.add(Box.createHorizontalGlue());
 			
 			//Panel del Emoticon
 			panelEmoticon = new JPanel();
@@ -156,10 +165,13 @@ public class Tablero extends JFrame {
 			
 			//Panel del Cronometro
 			panelCronometro = new JPanel();
+			panelCronometro.setLayout(new BoxLayout(panelCronometro, BoxLayout.X_AXIS ));
 			panelCronometro.setBorder(BorderFactory.createLineBorder(Color.black));
 			cronometroLabel = new JLabel("cronometro");
 			panelCronometro.setName("cronometro");
+			panelCronometro.add(Box.createHorizontalGlue());
 			panelCronometro.add(cronometroLabel);
+			panelCronometro.add(Box.createHorizontalGlue());
 			
 			panelContadores.add(panelContador);
 			panelContadores.add(panelEmoticon);
