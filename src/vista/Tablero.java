@@ -18,20 +18,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -40,6 +35,7 @@ import java.util.TimerTask;
 public class Tablero extends JFrame {
 
 	public JPanel contentPane;
+	public GridBagLayout gbl_contentPane;
 	public JPanel panelVisual, rejilla, panelContadores, panelContador, panelEmoticon, panelCronometro;
 	private JMenuBar menuBarInicio;
 	private JMenuItem menuItemSalir, menuItemIniciar, menuItemPuntuaciones, menuItemGuardarResultado;
@@ -74,7 +70,7 @@ public class Tablero extends JFrame {
 	private void initialize() {
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBounds(300, 100, 674, 507);
+		setBounds(300, 100, 500, 507);
 		
 		// Centrado en la pantalla
 		Dimension dimemsion = Toolkit.getDefaultToolkit().getScreenSize();
@@ -83,7 +79,7 @@ public class Tablero extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] { 658, 0 };
 		gbl_contentPane.rowHeights = new int[] { 0, 409, 35, 0 };
 		gbl_contentPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
@@ -95,6 +91,7 @@ public class Tablero extends JFrame {
 		gbc_panelVisual.gridx = 0;
 		gbc_panelVisual.gridy = 0;
 		contentPane.add(obtPanelMenu(), gbc_panelVisual);
+
 	}
 	
 
@@ -102,11 +99,24 @@ public class Tablero extends JFrame {
 	private JPanel obtPanelMenu() {
 		if (panelVisual == null) {
 			panelVisual = new JPanel();
-			FlowLayout flowLayout = (FlowLayout) panelVisual.getLayout();
-			flowLayout.setAlignment(FlowLayout.LEFT);
-			panelVisual.setLayout(new GridLayout(2, 0));
-			panelVisual.add(obtenerBarInicio());
-			panelVisual.add(obtenerBarContadores());
+			
+			GridBagLayout layoutMenu = new GridBagLayout();
+			layoutMenu.columnWidths = new int[] { 500, 370, 0, 0 };
+			layoutMenu.rowHeights = new int[] { 0, 49, 35, 0 };
+			
+			GridBagConstraints constraints = new GridBagConstraints();
+			constraints.gridheight=3;
+			constraints.fill = GridBagConstraints.VERTICAL;
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			panelVisual.add(obtenerBarInicio(),constraints);
+			panelVisual.setLayout(layoutMenu);
+			constraints.gridx = 0;
+			constraints.gridy = 1;
+			panelVisual.add(obtenerBarContadores(),constraints);
+			String title = "Buscaminas-singletonsgroup";
+			Border border = BorderFactory.createTitledBorder(title);
+			panelVisual.setBorder(border);
 		}
 		return panelVisual;
 	}
@@ -115,7 +125,6 @@ public class Tablero extends JFrame {
 	private JMenuBar obtenerBarInicio() {
 		if (menuBarInicio == null) {
 			menuBarInicio = new JMenuBar();
-			menuBarInicio.setSize(new Dimension(100, 50));
 			menuArchivo = new JMenu("Archivo");
 			menuAyuda = new JMenu("Ayuda");
 			menuItemSalir = new JMenuItem("Salir");
@@ -132,7 +141,7 @@ public class Tablero extends JFrame {
 			menuArchivo.add(menuItemSalir);
 			menuBarInicio.add(menuArchivo);
 			menuBarInicio.add(menuAyuda);
-		}
+	}
 		return menuBarInicio;
 	}
 	
@@ -140,51 +149,51 @@ public class Tablero extends JFrame {
 	private JPanel obtenerBarContadores() {
 		if (panelContadores == null) {
 			panelContadores = new JPanel();
-			panelContadores.setLayout(new GridLayout(1, 0));
-			panelContadores.setSize(new Dimension(100, 200));
-			String title = "Buscaminas-singletonsgroup";
-			Border border = BorderFactory.createTitledBorder(title);
-			panelContadores.setBorder(border);
-			
+			GridBagLayout gbl_contentPanelContadores = new GridBagLayout();
+			gbl_contentPanelContadores.columnWidths = new int[] { 350, 0 };
+			gbl_contentPanelContadores.rowHeights = new int[] { 0, 0, 0, 0 };
+			gbl_contentPanelContadores.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+			gbl_contentPanelContadores.rowWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+			panelContadores.setLayout(gbl_contentPanelContadores);
+
 			//Panel del Contador
 			panelContador = new JPanel();
-			panelContador.setLayout(new BoxLayout(panelContador, BoxLayout.X_AXIS ));
-			panelContador.setBorder(BorderFactory.createLineBorder(Color.black));
 			contadorLabel = new JLabel("0/0");
 			panelContador.setName("contador");
-			panelContador.add(Box.createHorizontalGlue());
 			panelContador.add(contadorLabel);
-			panelContador.add(Box.createHorizontalGlue());
+			GridBagConstraints gbc_constraints = new GridBagConstraints();
+			gbc_constraints.insets = new Insets(0, 0, 0, 0);
+			gbc_constraints.fill = GridBagConstraints.CENTER;
+			gbc_constraints.gridx = 1;
+			gbc_constraints.gridy = 0;
+			panelContadores.add(panelContador,gbc_constraints);
 			
 			//Panel del Emoticon
 			panelEmoticon = new JPanel();
-			panelEmoticon.setBorder(BorderFactory.createLineBorder(Color.black));
 			panelEmoticon.setName("emoticon");
 			emoticon = new Emoticono(); 
 			panelEmoticon.add(emoticon.emoticon_sonrisa(true));
+			gbc_constraints.insets = new Insets(0, 0, 0, 0);
+			gbc_constraints.fill = GridBagConstraints.CENTER;
+			gbc_constraints.gridx = 2;
+			gbc_constraints.gridy = 0;
+			panelContadores.add(panelEmoticon,gbc_constraints);
 			
 			//Panel del Cronometro
 			panelCronometro = new JPanel();
-			panelCronometro.setLayout(new BoxLayout(panelCronometro, BoxLayout.X_AXIS ));
-			panelCronometro.setBorder(BorderFactory.createLineBorder(Color.black));
-			cronometroLabel = new JLabel("cronometro");
+			cronometroLabel = new JLabel("0");
 			panelCronometro.setName("cronometro");
-			panelCronometro.add(Box.createHorizontalGlue());
 			panelCronometro.add(cronometroLabel);
-			panelCronometro.add(Box.createHorizontalGlue());
-			
-			panelContadores.add(panelContador);
-			panelContadores.add(panelEmoticon);
-			panelContadores.add(panelCronometro);
-			
-
-
+			gbc_constraints.insets = new Insets(0, 0, 0, 0);
+			gbc_constraints.fill = GridBagConstraints.CENTER;
+			gbc_constraints.gridx = 3;
+			gbc_constraints.gridy = 0;
+			panelContadores.add(panelCronometro,gbc_constraints);
 		}
 		return panelContadores;
 	}
 
 	// Mostrar puntuaciones
-	
 	private void mostrarPuntuaciones() {
 		gesPun = new GestorPuntuaciones();
 		JOptionPane.showMessageDialog(panelVisual, gesPun.obtPuntuacionesDesdeXMLEnTabla());
@@ -226,13 +235,10 @@ public class Tablero extends JFrame {
 		rejilla = new JPanel();
 		if (x == 12) {
 			setSize(555, 670);
-			rejilla.setSize(525, 525);
 		} else if (x == 10) {
 			setSize(505, 620);
-			rejilla.setSize(475, 475);
 		} else if (x == 7) {
-			setSize(405, 520);
-			rejilla.setSize(375, 375);
+			setSize(505, 620);
 		}
 
 		logicaJuegoBuscaminas.reiniciar(x, y, clicado);
@@ -255,10 +261,10 @@ public class Tablero extends JFrame {
 
 		//Incluir la rejilla con las casillas en el contenedor JPanel 
 		GridBagConstraints gbc_panelCasillas = new GridBagConstraints();
-		gbc_panelCasillas.insets = new Insets(0, 0, 5, 0);
-		gbc_panelCasillas.fill = GridBagConstraints.BOTH;
-		gbc_panelCasillas.gridx = 0	;
+		gbc_panelCasillas.insets = new Insets(0, 0, -35, 0);
+		gbc_panelCasillas.gridx = 0;
 		gbc_panelCasillas.gridy = 1;
+		gbc_panelCasillas.fill = GridBagConstraints.BOTH;
 		contentPane.add(rejilla, gbc_panelCasillas);
 	}
 	
@@ -316,7 +322,6 @@ public class Tablero extends JFrame {
 		    			panelEmoticon.removeAll();
 		    			panelEmoticon.add(logicaJuegoBuscaminas.emoticono.emoticon_sonrisa(false));
 		    			contentPane.updateUI();
-		    			
 		    		}
 		    		
 				}
