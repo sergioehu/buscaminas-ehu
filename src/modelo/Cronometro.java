@@ -1,6 +1,6 @@
 package modelo;
 
-
+//Control del contador de tiempo
 public class Cronometro extends Thread implements Runnable {
 
     public String cron;

@@ -1,5 +1,6 @@
 package modelo;
 
+//Manjeja la informacion relativa al tamano del tablero y el nivel de dificultad
 public enum MedidasTablero {
 
 	//format = "7x10 (Nivel 1)"

@@ -9,14 +9,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
-
+//Mostrar emoticono smile, sonrisa cuando juega o gana, triste cuando pierde la partida
 public class Emoticono {
 	JButton emoticon;
 	public Emoticono() {
 		emoticon = new JButton();
 	}
 	
-	//Mostrar emoticono smile
 	public JButton emoticon_sonrisa(boolean x) {
 		String pathSonrisaq;
 		if (x) {

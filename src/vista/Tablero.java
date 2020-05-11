@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+// Contiene la informacion del panel de juego
 public class Tablero extends JFrame {
 
 	public JPanel contentPane;

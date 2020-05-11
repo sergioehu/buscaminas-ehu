@@ -1,5 +1,6 @@
 package modelo;
 
+//Manneja el contador de minas localizadas respecto de las totales
 public class Contador {
 	private int minasTotales;
 	private int minasContadas;

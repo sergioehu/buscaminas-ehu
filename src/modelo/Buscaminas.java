@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import vista.Casilla;
 import vista.Emoticono;
 
+//Clase buscaminas encargada de la funcionalidad principal del juego
 public class Buscaminas {
 
 	List<Integer> posicion_minas = new ArrayList<>();

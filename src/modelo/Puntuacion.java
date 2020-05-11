@@ -1,4 +1,6 @@
 package modelo;
+
+//Maneja la informacion de la puntuacion de la partida
 public class Puntuacion {
         private String nombre;
         private int puntuacion;

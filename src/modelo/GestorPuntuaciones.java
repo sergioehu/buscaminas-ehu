@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+//Realiza el proceso de grabacion de puntuaciones en el XML a traves de la clase ParserPuntuacionXml
 public class GestorPuntuaciones {
 	private  List<Puntuacion> puntuaciones;
 	private  JTable puntuacionesTabla;

@@ -1,5 +1,6 @@
 package modelo;
 
+//Maneja la sesion durante la partida junto con su informacion
 public class Sesion {
 
     private String nombreJugador;
