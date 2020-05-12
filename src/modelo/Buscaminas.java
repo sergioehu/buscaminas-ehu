@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import vista.Casilla;
 import vista.Emoticono;
 
-//Clase buscaminas encargada de la funcionalidad principal del juego
+//Clase buscaminas encargada de la funcionalidad principal 
 public class Buscaminas {
 
 	List<Integer> posicion_minas = new ArrayList<>();
@@ -112,7 +112,6 @@ public class Buscaminas {
 							c[y2][y3].setBorderPainted(false);
 							c[y2][y3].setContentAreaFilled(false);
 							//emoticon_sonrisa(false);
-							cronometro.stop();
 							fin_juego(x, y, c);
 						} else {
 							motor(y2, y3, x, y, c, n1, n2);
@@ -176,10 +175,32 @@ public class Buscaminas {
 	        }
 	        */
         crearminas(x,y,c);
+        crearadyacentes(x,y);
         fin = false;
         gano = false;
     }
     
+    private void crearadyacentes(int x, int y){
+    	System.out.println("x: "+x+" y: "+y);
+    	for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
+				if (c[i][j].esMina) {
+			    	System.out.println("ES MINA i: "+i+"j: "+j);
+					if (i-1>-1&&j-1>-1&&i+1<x&&j+1<y) {
+				    	System.out.println("i: "+i+"j: "+j);
+						c[i-1][j-1].minas_adyacentes=c[i-1][j-1].minas_adyacentes+1; 
+						c[i][j-1].minas_adyacentes=c[i][j-1].minas_adyacentes+1; 
+						c[i+1][j-1].minas_adyacentes=c[i+1][j-1].minas_adyacentes+1; 
+						c[i+1][j].minas_adyacentes=c[i+1][j].minas_adyacentes+1;
+						c[i+1][j+1].minas_adyacentes=c[i+1][j+1].minas_adyacentes+1;
+						c[i][j+1].minas_adyacentes=c[i][j+1].minas_adyacentes+1;
+						c[i-1][j+1].minas_adyacentes=c[i-1][j+1].minas_adyacentes+1;
+				    	c[i-1][j].minas_adyacentes=c[i-1][j].minas_adyacentes+1;
+					} 
+				}
+			}
+		}
+    }
     
     private void crearminas(int x, int y, Casilla[][] c) {
     	posicion_minas.clear();
@@ -271,15 +292,17 @@ public class Buscaminas {
 			return;
 		}
 		if (c[fila][columna].minas_adyacentes > 0) {
-			//cambiar(fila, columna);
+				cambiar(fila, columna,c);
+				//System.out.println("fila "+fila+"columna "+ columna);
 			return;
 		}
-		
 		c[fila][columna].setVisible(false);
 		c[fila][columna].visitado = true;
 		c[fila][columna].detectado = true;
 		for (int i = 0; i < 8; i++) {
 			motor(fila + n1[i], columna + n2[i],x,y, c,n1,n2 );
+			//System.out.println("fila "+fila+"columna "+ columna);
+
 		}
 	}
 
