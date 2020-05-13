@@ -185,19 +185,47 @@ public class Buscaminas {
     	for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
 				if (c[i][j].esMina) {
-			    	System.out.println("ES MINA i: "+i+"j: "+j);
-					if (i-1>-1&&j-1>-1&&i+1<x&&j+1<y) {
-				    	System.out.println("i: "+i+"j: "+j);
+					
+                    ///   Adyacentes	
+					///	
+			    	///   3    5   8
+			    	///   2  mina  7
+			    	///   1    4   6
+			    	
+			    	///  1
+					if (i-1>-1&j-1>-1)						
+					
 						c[i-1][j-1].minas_adyacentes=c[i-1][j-1].minas_adyacentes+1; 
-						c[i][j-1].minas_adyacentes=c[i][j-1].minas_adyacentes+1; 
+			    	///  2
+					if (j-1>-1)
+						
+						c[i][j-1].minas_adyacentes=c[i][j-1].minas_adyacentes+1;
+			    	///  3	
+					if (i+1<x&j-1>-1)
+						
 						c[i+1][j-1].minas_adyacentes=c[i+1][j-1].minas_adyacentes+1; 
+			    	///  4
+					if (i+1<x)
+						
 						c[i+1][j].minas_adyacentes=c[i+1][j].minas_adyacentes+1;
+			    	///  5
+					if (i+1<x&j+1<y)
+						
 						c[i+1][j+1].minas_adyacentes=c[i+1][j+1].minas_adyacentes+1;
+			    	///  6
+					if (j+1<y)
+						
 						c[i][j+1].minas_adyacentes=c[i][j+1].minas_adyacentes+1;
+			    	///  7
+					if (i-1>-1&j+1<y) {
 						c[i-1][j+1].minas_adyacentes=c[i-1][j+1].minas_adyacentes+1;
-				    	c[i-1][j].minas_adyacentes=c[i-1][j].minas_adyacentes+1;
-					} 
-				}
+					}
+			    	///  8					
+					if (i-1>-1)
+						
+						c[i-1][j].minas_adyacentes=c[i-1][j].minas_adyacentes+1;
+				} 
+				
 			}
 		}
     }
