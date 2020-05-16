@@ -23,7 +23,7 @@ public class ParameterizedTestContadorUsingConstructor {
     //Crea los datos de test
     @Parameters
     public static Collection<Object[]> data() {
-        Object[][] data = new Object[][] { { 1 , 2 }, { 5, 3 }, { 121, 4 } };
+        Object[][] data = new Object[][] { { 0 , 2 }, { 5, 3 }, { 121, 4 } };
         return Arrays.asList(data);
     }
 

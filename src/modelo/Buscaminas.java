@@ -321,7 +321,6 @@ public class Buscaminas {
 		}
 		if (c[fila][columna].minas_adyacentes > 0) {
 				cambiar(fila, columna,c);
-				//System.out.println("fila "+fila+"columna "+ columna);
 			return;
 		}
 		c[fila][columna].setVisible(false);
@@ -329,8 +328,6 @@ public class Buscaminas {
 		c[fila][columna].detectado = true;
 		for (int i = 0; i < 8; i++) {
 			motor(fila + n1[i], columna + n2[i],x,y, c,n1,n2 );
-			//System.out.println("fila "+fila+"columna "+ columna);
-
 		}
 	}
 
